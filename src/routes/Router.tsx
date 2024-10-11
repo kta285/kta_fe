@@ -8,7 +8,6 @@ export const routes = [
     element: <Layout />,
     children: [
       { path: '/', element: <Index />, index: true },
-
       { path: '*', element: <NotFound /> },
     ],
   },
