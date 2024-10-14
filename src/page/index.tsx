@@ -1,7 +1,7 @@
 import React from 'react';
 
 const Index = () => {
-  return <div></div>;
+  return <div className="min-h-[80vh] "></div>;
 };
 
 export default Index;
