@@ -29,7 +29,7 @@ const CustomDatePicker = ({ startDate, setStartDate }: IProps) => {
   ];
 
   return (
-    <div className="flex justify-between items-center w-full">
+    <div className="flex justify-between items-center w-[80%] mx-auto">
       <DatePicker
         renderCustomHeader={({ date, changeYear, changeMonth }) => (
           <div className="flex items-center space-x-2 mx-auto w-[70%]">

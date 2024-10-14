@@ -19,24 +19,24 @@ const Header = () => {
         <div className="w-[50%] flex justify-end">
           <ul className="flex w-[70%] justify-around ">
             <li className="hover:text-[#dcdcdc]">
-              <Link className="text-h3" to="/">
+              <Link className="text-h3" to="/project">
                 카테고리
               </Link>
             </li>
             <li className="hover:text-[#dcdcdc]">
-              <Link className="text-h3" to="/">
+              <Link className="text-h3" to="/write">
                 프로젝트 등록
               </Link>
             </li>
             {jwt ? (
               <li className="hover:text-[#dcdcdc]">
-                <Link className="text-h3" to="/">
+                <Link className="text-h3" to="/mypage">
                   마이페이지
                 </Link>
               </li>
             ) : (
               <li className="hover:text-[#dcdcdc]">
-                <Link className="text-h3" to="/">
+                <Link className="text-h3" to="/signup">
                   로그인
                 </Link>
               </li>
