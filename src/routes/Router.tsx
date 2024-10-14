@@ -1,8 +1,8 @@
 import Layout from '../components/common/Layout';
 import Index from '../page';
-import MyPage from '../page/MyPage';
 import NotFound from '../page/NotFound';
 import Project from '../page/Project';
+import MyPage from '../page/MyPage';
 
 export const routes = [
   {
