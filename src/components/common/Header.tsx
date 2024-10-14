@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 
 const Header = () => {
-  const jwt = false;
+  const jwt = true;
 
   return (
     <nav className="flex w-[100%] m-auto border-b h-[80px]">
