@@ -8,9 +8,7 @@ const Layout: React.FC = () => {
     <div>
       <Suspense fallback={<>로딩중...</>}>
         <Header />
-
         <Outlet />
-
         <Footer />
       </Suspense>
     </div>

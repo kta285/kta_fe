@@ -1,9 +1,6 @@
 /** @type {import('tailwindcss').Config} */
-// eslint-disable-next-line no-undef
 module.exports = {
-  content: [
-    './src/**/*.{js,jsx,ts,tsx}', // Tailwind가 적용될 파일 경로
-  ],
+  content: [],
   theme: {
     extend: {
       colors: {
