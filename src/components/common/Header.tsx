@@ -19,8 +19,8 @@ const Header = () => {
         <div className="w-[50%] flex justify-end">
           <ul className="flex w-[70%] justify-around ">
             <li className="hover:text-[#dcdcdc]">
-              <Link className="text-h3" to="/">
-                카테고리
+              <Link className="text-h3" to="/project">
+                모든 프로젝트
               </Link>
             </li>
             <li className="hover:text-[#dcdcdc]">
@@ -30,7 +30,7 @@ const Header = () => {
             </li>
             {jwt ? (
               <li className="hover:text-[#dcdcdc]">
-                <Link className="text-h3" to="/">
+                <Link className="text-h3" to="/mypage">
                   마이페이지
                 </Link>
               </li>
