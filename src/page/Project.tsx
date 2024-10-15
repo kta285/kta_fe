@@ -2,7 +2,7 @@
 import ProjectMenu from "../components/projectlist/ProjectMenu";
 import ProjectList from "../components/projectlist/ProjectList";
 import { useEffect, useState } from "react";
-import { projectAPI } from "../api/requests/projectAPI";
+import { projectApi } from "../api/requests/projectApi";
 
 const Project = () => {
   const [projects, setProjects] = useState([]);
@@ -10,7 +10,7 @@ const Project = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data = await projectAPI(); // 이미지 데이터를 서버에서 가져옴
+        const data = await projectApi(); // 이미지 데이터를 서버에서 가져옴
         setProjects(data); // 가져온 데이터로 상태 업데이트
       } catch (error) {
         console.error("Error fetching data:", error); // 오류 처리

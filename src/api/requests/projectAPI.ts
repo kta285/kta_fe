@@ -1,7 +1,7 @@
 import axios from '../client';
 const baseDirectory = "/project/"
 
-export const projectAPI = async () => {
+export const projectApi = async () => {
   try {
     const res = await axios.get(baseDirectory + 'all');
     return res.data; // 데이터 반환
