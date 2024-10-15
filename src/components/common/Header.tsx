@@ -24,7 +24,7 @@ const Header = () => {
               </Link>
             </li>
             <li className="hover:text-[#dcdcdc]">
-              <Link className="text-h3" to="/">
+              <Link className="text-h3" to="/write">
                 프로젝트 등록
               </Link>
             </li>
@@ -36,7 +36,7 @@ const Header = () => {
               </li>
             ) : (
               <li className="hover:text-[#dcdcdc]">
-                <Link className="text-h3" to="/">
+                <Link className="text-h3" to="/signup">
                   로그인
                 </Link>
               </li>
