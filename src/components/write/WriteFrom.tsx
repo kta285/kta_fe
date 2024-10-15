@@ -1,21 +1,42 @@
 import React, { useRef, useState } from 'react';
 import CustomEditor from './CustomEditor';
 import CustomDatePicker from '../common/datePicker';
-
+import { writeApi } from '../../api/requests/writeApi';
+import { useNavigate } from 'react-router-dom';
 const WriteForm = () => {
-  const title = useRef(null);
-  const targetAmount = useRef(null);
+  const title = useRef<HTMLInputElement>(null);
+  const navigate = useNavigate();
+  const targetAmount = useRef<HTMLInputElement>(null);
   const [category, setCategory] = useState('');
   // eslint-disable-next-line
   const [content, setContent] = useState('');
-  const [startDate, setStartDate] = useState(new Date());
+  const [endDate, setEndDate] = useState(new Date());
   const handleCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setCategory(e.target.value);
   };
-
+  const submit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const body = {
+      title: title.current?.value || '',
+      amount: targetAmount.current?.value || '',
+      category: category,
+      content: content,
+      startDate: new Date(),
+      endDate: endDate,
+    };
+    try {
+      await writeApi({ body: body });
+      navigate('/');
+    } catch (err) {
+      console.log(err);
+    }
+  };
   return (
     <div className="w-[70%] mx-auto min-h-[650px] p-6">
-      <form className="bg-white rounded-lg shadow-md p-8 space-y-6">
+      <form
+        className="bg-white rounded-lg shadow-md p-8 space-y-6"
+        onSubmit={(e) => submit(e)}
+      >
         <h2 className="text-2xl font-bold text-gray-800 text-center mb-4">
           프로젝트 작성
         </h2>
@@ -71,9 +92,15 @@ const WriteForm = () => {
           </select>
         </div>
         <div className="w-full mx-auto">
-          <CustomDatePicker startDate={startDate} setStartDate={setStartDate} />
+          <label
+            htmlFor="endDate"
+            className="block text-sm font-medium text-gray-700 mb-1"
+          >
+            마감일
+          </label>
+          <CustomDatePicker startDate={endDate} setStartDate={setEndDate} />
         </div>
-        <CustomEditor />
+        <CustomEditor content={content} setContent={setContent} />
         <div className="text-center">
           <button
             type="submit"
