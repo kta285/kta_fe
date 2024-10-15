@@ -1,4 +1,4 @@
-import React from 'react';
+// 파일 이름 수정
 
 const SignupForm = () => {
   return (

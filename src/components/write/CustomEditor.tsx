@@ -2,15 +2,23 @@ import { useRef, useState } from 'react';
 import { Editor as TinyMCEReactEditor } from '@tinymce/tinymce-react';
 import type { Editor as TinyMCEEditor } from 'tinymce';
 
-const CustomEditor = () => {
+type content = {
+  content: string;
+  setContent: React.Dispatch<React.SetStateAction<string>>;
+};
+
+// eslint-disable-next-line
+const CustomEditor = ({ content, setContent }: content) => {
   const innerRef = useRef<TinyMCEEditor | null>(null); // TinyMCE 에디터 인스턴스 참조
   const uploadRef = useRef<HTMLInputElement>(null); // 파일 업로드 인풋 참조
+  // eslint-disable-next-line
   const [isInit, setIsInit] = useState(false); // 에디터 초기화 상태
+  // eslint-disable-next-line
   const [isLoading, setIsLoading] = useState(false); // 로딩 상태 관리
 
   // 에디터의 내용이 변경될 때 호출되는 함수
   const onChange = (content: string) => {
-    console.log(content); // 내용 확인 (여기서 상태 업데이트나 부모 컴포넌트로 전달 가능)
+    setContent(content); // 내용 확인 (여기서 상태 업데이트나 부모 컴포넌트로 전달 가능)
   };
 
   return (
