@@ -4,7 +4,7 @@ import { routes } from './routes/Router';
 
 function App() {
   const elem = useRoutes(routes);
-  return <div className="App w-[100%]">{elem}</div>;
+  return <div className='App'>{elem}</div>;
 }
 
 export default App;

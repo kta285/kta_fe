@@ -1,7 +1,6 @@
-import Layout from '../components/common/Layout';
+import Layout from '../components/Layout';
 import Index from '../page';
 import NotFound from '../page/NotFound';
-import Signup from '../page/Signup';
 
 export const routes = [
   {
@@ -9,7 +8,6 @@ export const routes = [
     element: <Layout />,
     children: [
       { path: '/', element: <Index />, index: true },
-      { path: '/signup', element: <Signup/> },
       { path: '*', element: <NotFound /> },
     ],
   },
