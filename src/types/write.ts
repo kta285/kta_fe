@@ -1,5 +1,5 @@
 export interface WriteProps {
-  body: WriteBodyPorps;
+  body: WriteBodyProps;
 }
 
 export type WriteBodyProps = {
