@@ -6,7 +6,7 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import { Pagination, Navigation, Autoplay } from 'swiper/modules';
 import { ImgProps } from '../../types/main';
-import { mainImgs } from '../../api/requests/mainAPi';
+import { mainImgs } from '../../api/requests/mainApi';
 // Swiper 모듈 등록
 // eslint-disable-next-line react-hooks/rules-of-hooks
 SwiperCore.use([Navigation, Pagination, Autoplay]);
