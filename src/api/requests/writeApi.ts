@@ -1,3 +1,4 @@
+// 파일 이름 수정
 import { WriteProps } from '../../types/write';
 import axios from '../client';
 

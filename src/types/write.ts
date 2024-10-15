@@ -1,8 +1,8 @@
 export interface WriteProps {
-  body: WriteBodyPorps;
+  body: WriteBodyProps;
 }
 
-export type WriteBodyPorps = {
+export type WriteBodyProps = {
   title: string;
   amount: string;
   category: string;
