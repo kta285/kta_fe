@@ -1,10 +1,10 @@
 import React from 'react';
-import WriteFrom from '../components/write/WriteFrom';
+import WriteForm from '../components/write/WriteForm';
 
 const Write = () => {
   return (
     <div>
-      <WriteFrom />
+      <WriteForm />
     </div>
   );
 };
