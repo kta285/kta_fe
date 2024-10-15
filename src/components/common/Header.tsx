@@ -20,7 +20,7 @@ const Header = () => {
           <ul className="flex w-[70%] justify-around ">
             <li className="hover:text-[#dcdcdc]">
               <Link className="text-h3" to="/project">
-                카테고리
+                모든 프로젝트
               </Link>
             </li>
             <li className="hover:text-[#dcdcdc]">
