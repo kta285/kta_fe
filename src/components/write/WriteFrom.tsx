@@ -6,6 +6,7 @@ const WriteForm = () => {
   const title = useRef(null);
   const targetAmount = useRef(null);
   const [category, setCategory] = useState('');
+  // eslint-disable-next-line
   const [content, setContent] = useState('');
   const [startDate, setStartDate] = useState(new Date());
   const handleCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {

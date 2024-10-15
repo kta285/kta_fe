@@ -5,7 +5,9 @@ import type { Editor as TinyMCEEditor } from 'tinymce';
 const CustomEditor = () => {
   const innerRef = useRef<TinyMCEEditor | null>(null); // TinyMCE 에디터 인스턴스 참조
   const uploadRef = useRef<HTMLInputElement>(null); // 파일 업로드 인풋 참조
+  // eslint-disable-next-line
   const [isInit, setIsInit] = useState(false); // 에디터 초기화 상태
+  // eslint-disable-next-line
   const [isLoading, setIsLoading] = useState(false); // 로딩 상태 관리
 
   // 에디터의 내용이 변경될 때 호출되는 함수
