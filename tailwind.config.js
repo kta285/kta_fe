@@ -1,6 +1,11 @@
-/** @type {import('tailwindcss').Config} */
+
+/** / @type {import('tailwindcss').Config} */
+// eslint-disable-next-line no-undef
 module.exports = {
-  content: [],
+  content: [
+    './src/**/*.{js,jsx,ts,tsx}',  // React 파일들을 대상으로 설정
+    './public/index.html',    
+  ],
   theme: {
     extend: {
       colors: {

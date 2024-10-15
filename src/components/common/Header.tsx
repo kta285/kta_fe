@@ -8,7 +8,7 @@ const Header = () => {
       <div className="w-[70%] flex m-auto">
         <div className="w-[50%] flex ">
           <img
-            src="/imgs/user-solid.png"
+            src="/img/user-solid.png"
             alt="logo"
             className="h-[30px] mx-1"
           />
@@ -36,7 +36,7 @@ const Header = () => {
               </li>
             ) : (
               <li className="hover:text-[#dcdcdc]">
-                <Link className="text-h3" to="/signup">
+                <Link className="text-h3" to="/">
                   로그인
                 </Link>
               </li>
