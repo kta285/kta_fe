@@ -1,6 +1,8 @@
 import Layout from '../components/common/Layout';
 import Index from '../page';
+import MyPage from '../page/MyPage';
 import NotFound from '../page/NotFound';
+import Project from '../page/Project';
 
 export const routes = [
   {
@@ -8,6 +10,8 @@ export const routes = [
     element: <Layout />,
     children: [
       { path: '/', element: <Index />, index: true },
+      { path: '/project', element: <Project /> },
+      { path: '/mypage', element: <MyPage /> },
       { path: '*', element: <NotFound /> },
     ],
   },
