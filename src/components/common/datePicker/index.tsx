@@ -38,7 +38,7 @@ const CustomDatePicker = ({ startDate, setStartDate }: IProps) => {
               onChange={({ target: { value } }) => changeYear(Number(value))}
               className="border border-gray-300 rounded-md px-2 py-1"
             >
-              {years.map((option) => (
+              {years.map((option: any) => (
                 <option key={option} value={option}>
                   {option + '년'}
                 </option>
