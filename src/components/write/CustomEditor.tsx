@@ -7,6 +7,7 @@ type content = {
   setContent: React.Dispatch<React.SetStateAction<string>>;
 };
 
+// eslint-disable-next-line
 const CustomEditor = ({ content, setContent }: content) => {
   const innerRef = useRef<TinyMCEEditor | null>(null); // TinyMCE 에디터 인스턴스 참조
   const uploadRef = useRef<HTMLInputElement>(null); // 파일 업로드 인풋 참조
