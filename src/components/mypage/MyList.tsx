@@ -26,17 +26,16 @@ const getFundingState = (state: 'ongoing' | 'completed' | 'pending') => {
 };
 
 const MyList = () => {
-
   const [projects, setProjects] = useState([]); // 초기값을 props로 설정
 
   useEffect(() => {
-    getProjects()
-      .then(setProjects)
-      .catch(console.error);
+    getProjects().then(setProjects).catch(console.error);
   }, []);
 
   if (projects.length === 0) {
-    return <div className='container mx-auto my-10'>표시할 내용이 없습니다.</div>
+    return (
+      <div className='container mx-auto my-10'>표시할 내용이 없습니다.</div>
+    );
   }
 
   return (
@@ -46,7 +45,7 @@ const MyList = () => {
 
         return (
           <Link
-            to={`/project/${project.project_id}`} // 클릭 시 /project/project_id로 이동
+            to={`/projects/detail/${project.project_id}`} // 클릭 시 /project/project_id로 이동
             key={project.project_id}
             className='border border-gray-200 rounded-lg shadow-lg mb-6 p-4 flex cursor-pointer'
           >
@@ -64,9 +63,7 @@ const MyList = () => {
               />
             </div>
             <div className='flex-grow'>
-              <h3 className='text-2xl mt-4 font-semibold'>
-                {project.title}
-              </h3>
+              <h3 className='text-2xl mt-4 font-semibold'>{project.title}</h3>
               <p className='text-gray-600 mt-2 my-2'>{project.type}</p>
               <p className='my-2'>
                 <strong>{formatDate(project.start_date)}</strong> 부터{' '}

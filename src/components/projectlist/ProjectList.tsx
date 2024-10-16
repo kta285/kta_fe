@@ -43,7 +43,7 @@ const ProjectList: React.FC<ProjectListProps> = ({ projects }) => {
 
         return (
           <Link
-            to={`/projects/${project.project_id}`} // 클릭 시 /project/project_id로 이동
+            to={`/projects/detail/${project.project_id}`} // 클릭 시 /project/project_id로 이동
             key={project.project_id}
             className='border border-gray-200 rounded-lg shadow-lg mb-6 p-4 flex cursor-pointer'
           >
