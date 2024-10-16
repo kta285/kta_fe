@@ -3,10 +3,12 @@ import Index from '../page';
 import Faq from '../page/Faq';
 import MyPage from '../page/MyPage';
 import NotFound from '../page/NotFound';
-import Signup from '../page/Signup';
+import ProjectDetail from '../page/ProjectDetail';
 import Projects from '../page/Projects';
-
 import Write from '../page/Write';
+import InquiryList from '../components/faq/InquiryList';
+import MyList from '../components/mypage/MyList';
+import Signup from '../page/Signup';
 
 export const routes = [
   {
@@ -15,10 +17,20 @@ export const routes = [
     children: [
       { path: '/', element: <Index />, index: true },
       { path: '/signup', element: <Signup /> },
-      { path: '/project', element: <Projects /> },
+      { path: '/projects', element: <Projects /> },
+      { path: '/projects/:type', element: <Projects /> },
+      { path: '/projects/detail/:id', element: <ProjectDetail /> },
       { path: '/write', element: <Write /> },
-      { path: '/signup', element: <Signup /> },
-      { path: '/mypage', element: <MyPage /> },
+      {
+        path: '/mypage',
+        element: <MyPage />,
+        children: [
+          { path: '', element: <MyList />, index: true },
+          { path: 'my', element: <MyList /> },
+          { path: 'funding', element: <MyList /> },
+          { path: 'inquiry', element: <InquiryList /> },
+        ],
+      },
       { path: '/faq', element: <Faq /> },
       { path: '*', element: <NotFound /> },
     ],

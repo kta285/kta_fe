@@ -12,9 +12,26 @@ const WriteForm = () => {
   // eslint-disable-next-line
   const [content, setContent] = useState('');
   const [endDate, setEndDate] = useState(new Date());
+  const [thumbnail, setThumbnail] = useState<string>(''); // Base64로 저장
+  const [thumbnailPreview, setThumbnailPreview] = useState<string | null>(null);
+  console.log(thumbnail);
+
   const handleCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setCategory(e.target.value);
   };
+
+  const handleThumbnailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files ? e.target.files[0] : null;
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setThumbnail(reader.result as string); // Base64 데이터 저장
+        setThumbnailPreview(URL.createObjectURL(file)); // 미리보기용 URL 생성
+      };
+      reader.readAsDataURL(file); // 파일을 base64로 읽음
+    }
+  };
+
   const submit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const body = {
@@ -24,21 +41,21 @@ const WriteForm = () => {
       content: content,
       startDate: new Date(),
       endDate: endDate,
+      titleImg: thumbnail, // Base64로 변환된 썸네일 데이터
     };
     try {
       const res = await projectWriteApi({ body: body });
-      // res가 배열인지 체크
       if (Array.isArray(res)) {
         console.error('API 요청 중 에러가 발생했습니다.');
       } else if (res.status === 200) {
-        // res.data.message가 존재할 때 처리할 로직
         console.log(res.data.message);
-        navigate('/project');
+        navigate('/projects');
       }
     } catch (err) {
       console.log(err);
     }
   };
+
   return (
     <div className='w-[70%] mx-auto min-h-[650px] p-6'>
       <form
@@ -61,6 +78,31 @@ const WriteForm = () => {
             ref={title}
             className='border border-gray-300 rounded-md p-3  w-[80%]  focus:outline-none focus:ring-2 focus:ring-blue-400'
             placeholder='제목을 입력하세요'
+          />
+        </div>
+
+        <div className='w-full'>
+          <label
+            htmlFor='thumbnail'
+            className='block text-sm font-medium text-gray-700 mb-1'
+          >
+            썸네일 이미지
+          </label>
+          {thumbnailPreview && (
+            <div className='w-full flex justify-center mb-4'>
+              <img
+                src={thumbnailPreview}
+                alt='Thumbnail Preview'
+                className='mt-3 w-[200px] h-[200px] object-cover rounded-md'
+              />
+            </div>
+          )}
+          <input
+            type='file'
+            id='thumbnail'
+            accept='image/*'
+            onChange={handleThumbnailChange}
+            className='border border-gray-300 rounded-md p-3 w-[80%] focus:outline-none focus:ring-2 focus:ring-blue-400'
           />
         </div>
 
@@ -99,6 +141,7 @@ const WriteForm = () => {
             <option value='etc'>기타</option>
           </select>
         </div>
+
         <div className='w-full mx-auto'>
           <label
             htmlFor='endDate'
@@ -108,6 +151,7 @@ const WriteForm = () => {
           </label>
           <CustomDatePicker startDate={endDate} setStartDate={setEndDate} />
         </div>
+
         <CustomEditor content={content} setContent={setContent} />
         <div className='text-center'>
           <button

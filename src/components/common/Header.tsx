@@ -19,7 +19,7 @@ const Header = () => {
         <div className="w-[50%] flex justify-end">
           <ul className="flex w-[70%] justify-around ">
             <li className="hover:text-[#dcdcdc]">
-              <Link className="text-h3" to="/project">
+              <Link className="text-h3" to="/projects">
                 모든 프로젝트
               </Link>
             </li>
