@@ -19,7 +19,7 @@ export const routes = [
       { path: '/signup', element: <Signup /> },
       { path: '/projects', element: <Projects /> },
       { path: '/projects/:type', element: <Projects /> },
-      { path: '/project/:id', element: <ProjectDetail /> },
+      { path: '/projects/:id', element: <ProjectDetail /> },
       { path: '/write', element: <Write /> },
       {
         path: '/mypage',

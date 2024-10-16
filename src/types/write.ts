@@ -9,4 +9,5 @@ export type WriteBodyProps = {
   content: string;
   startDate: Date;
   endDate: Date;
+  titleImg: string;
 };
