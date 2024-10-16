@@ -15,9 +15,9 @@ export const routes = [
     children: [
       { path: '/', element: <Index />, index: true },
       { path: '/signup', element: <Signup /> },
-      { path: '/project', element: <Projects /> },
+      { path: '/projects', element: <Projects /> },
+      { path: '/projects/:type', element: <Projects /> },
       { path: '/write', element: <Write /> },
-      { path: '/signup', element: <Signup /> },
       { path: '/mypage', element: <MyPage /> },
       { path: '/faq', element: <Faq /> },
       { path: '*', element: <NotFound /> },
