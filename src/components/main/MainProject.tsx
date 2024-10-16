@@ -2,11 +2,10 @@ import React from 'react';
 import ProjectCard from './ProjectCard';
 import Button from '../common/Button';
 
-
 const MainProject = () => {
   return (
-    <div className="h-[900px] w-[70%] mx-auto ">
-      <div className="flex justify-between w-full flex-wrap h-[800px]">
+    <div className='h-[900px] w-[70%] mx-auto '>
+      <div className='flex justify-between w-full flex-wrap h-[800px]'>
         {[1, 2, 3, 4, 5, 6].map((item) => {
           return (
             <React.Fragment key={item}>

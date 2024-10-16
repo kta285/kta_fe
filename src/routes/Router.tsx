@@ -3,11 +3,12 @@ import Index from '../page';
 import Faq from '../page/Faq';
 import MyPage from '../page/MyPage';
 import NotFound from '../page/NotFound';
-import Signup from '../page/Signup';
+import ProjectDetail from '../page/ProjectDetail';
 import Projects from '../page/Projects';
 import Write from '../page/Write';
 import InquiryList from '../components/faq/InquiryList';
 import MyList from '../components/mypage/MyList';
+import Signup from '../page/Signup';
 
 export const routes = [
   {
@@ -18,6 +19,8 @@ export const routes = [
       { path: '/signup', element: <Signup /> },
       { path: '/projects', element: <Projects /> },
       { path: '/projects/:type', element: <Projects /> },
+      { path: '/project/:id', element: <ProjectDetail /> },
+
       { path: '/write', element: <Write /> },
       {
         path: '/mypage',

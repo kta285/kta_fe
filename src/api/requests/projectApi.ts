@@ -25,3 +25,13 @@ export const projectWriteApi = async ({
     return []; // 에러 시 빈 배열 반환
   }
 };
+export const projectDetailApi = async (id: string) => {
+  try {
+    const ids = Number(id);
+    const res = await axios.get(baseDirectory + `${ids}`);
+    return res.data; // 데이터 반환
+  } catch (error) {
+    console.error('Error fetching images:', error);
+    return []; // 에러 시 빈 배열 반환
+  }
+};
