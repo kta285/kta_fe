@@ -1,5 +1,5 @@
 // 프로젝트의 타입 정의
-export interface Project {
+export default interface Project {
   project_id: number;
   title: string;
   description: string;
@@ -11,8 +11,4 @@ export interface Project {
   start_date: string;
   end_date: string;
   type: string;
-}
-
-export interface ProjectListProps {
-  projects: Project[];
 }

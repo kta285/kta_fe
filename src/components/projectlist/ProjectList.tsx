@@ -1,7 +1,10 @@
 
 import React from 'react';
-import { Project, ProjectListProps } from '../../types/project';
+import Project from '../../types/project';
 
+export interface ProjectListProps {
+    projects: Project[];
+  }
 
 function formatDate(dateString: string) {
     const date = new Date(dateString);

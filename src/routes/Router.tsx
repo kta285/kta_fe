@@ -2,7 +2,7 @@ import Layout from '../components/common/Layout';
 import Index from '../page';
 import NotFound from '../page/NotFound';
 import Signup from '../page/Signup';
-import Project from '../page/Project';
+import Projects from '../page/Projects';
 import MyPage from '../page/MyPage';
 
 import Write from '../page/Write';
@@ -15,9 +15,9 @@ export const routes = [
     children: [
       { path: '/', element: <Index />, index: true },
       { path: '/signup', element: <Signup /> },
-      { path: '/project', element: <Project /> },
+      { path: '/project', element: <Projects /> },
       { path: '/write', element: <Write /> },
-      { path: '/signup', element: <Signup/> },
+      { path: '/signup', element: <Signup /> },
       { path: '/mypage', element: <MyPage /> },
       { path: '*', element: <NotFound /> },
     ],
