@@ -34,15 +34,8 @@ function Faq() {
     }
   ];
 
-  // 모달 열기 함수
-  const openModal = () => {
-    setIsModalOpen(true);
-  };
-
-  // 모달 닫기 함수
-  const closeModal = () => {
-    setIsModalOpen(false);
-  };
+  // 모달 토글 함수
+  const toggleModal = () => setIsModalOpen(prev => !prev)
 
   return (
     <div className="max-w-4xl mx-auto p-6 bg-gray-100 min-h-screen">
@@ -54,7 +47,7 @@ function Faq() {
       </div>
       <div className="flex justify-center space-x-4 mb-6">
         <button
-          onClick={openModal}
+          onClick={toggleModal}
           className="px-6 py-2 bg-blue-500 text-white rounded-full hover:bg-blue-600 transition duration-300"
         >
           1:1 문의 하기
@@ -69,7 +62,7 @@ function Faq() {
         <div className="fixed inset-0 flex items-center justify-center z-50" style={{ background: "rgba(0, 0, 0, 0.8)" }}>
           <div className="bg-white p-8 rounded-lg shadow-lg max-w-lg w-full relative">
             <button
-              onClick={closeModal}
+              onClick={toggleModal}
               className="absolute top-2 right-2 text-gray-500 hover:text-gray-800"
             >
               X

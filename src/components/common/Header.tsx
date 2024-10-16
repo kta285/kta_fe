@@ -28,6 +28,11 @@ const Header = () => {
                 프로젝트 등록
               </Link>
             </li>
+            <li className="hover:text-[#dcdcdc]">
+              <Link className="text-h3" to="/faq">
+                고객지원
+              </Link>
+            </li>
             {jwt ? (
               <li className="hover:text-[#dcdcdc]">
                 <Link className="text-h3" to="/mypage">
