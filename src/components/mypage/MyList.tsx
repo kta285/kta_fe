@@ -53,11 +53,7 @@ const MyList = () => {
             <div className='flex-shrink-0 mr-6'>
               <h2 className='text-md font-bold'>{project.created_by}</h2>
               <img
-                src={
-                  // 'http://picsum.photos/100/' +
-                  // Math.floor(90 + Math.random() * 10)
-                  project.title_img
-                }
+                src={project.title_img}
                 alt={project.title}
                 className='object-cover'
                 style={{ width: '150px', height: '150px' }}
