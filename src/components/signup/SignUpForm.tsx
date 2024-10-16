@@ -1,6 +1,28 @@
-// 파일 이름 수정
+import { Dispatch, SetStateAction, FormEvent } from "react";
 
-const SignupForm = () => {
+interface SignupFormProps {
+  username: string;
+  setUserName: Dispatch<SetStateAction<string>>;
+  email: string;
+  setEmail: Dispatch<SetStateAction<string>>;
+  password: string;
+  setPassword: Dispatch<SetStateAction<string>>;
+  checkPassword: string;
+  setCheckPassword: Dispatch<SetStateAction<string>>;
+  handleSubmit: (e: FormEvent<HTMLFormElement>) => Promise<void>;
+}
+
+const SignupForm: React.FC<SignupFormProps> = ({
+  username,
+  setUserName,
+  email,
+  setEmail,
+  password,
+  setPassword,
+  checkPassword,
+  setCheckPassword,
+  handleSubmit,
+}) => {
   return (
     <div className="bg-gray-100 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
       <div className="sm:mx-auto sm:w-3/4 sm:max-w-md">
@@ -11,7 +33,7 @@ const SignupForm = () => {
 
       <div className="mt-8 sm:mx-auto sm:w-3/4 sm:max-w-md">
         <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
-          <form className="space-y-6">
+          <form className="space-y-6" onSubmit={handleSubmit}>
             <div className="flex flex-col items-center">
               <label
                 htmlFor="username"
@@ -26,6 +48,7 @@ const SignupForm = () => {
                   type="text"
                   required
                   className="appearance-none block w-full px-3 py-3 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                  onChange={(e) => setUserName(e.target.value)}
                 />
               </div>
             </div>
@@ -45,6 +68,7 @@ const SignupForm = () => {
                   autoComplete="email"
                   required
                   className="appearance-none block w-full px-3 py-3 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                  onChange={(e) => setEmail(e.target.value)}
                 />
               </div>
             </div>
@@ -64,6 +88,7 @@ const SignupForm = () => {
                   autoComplete="new-password"
                   required
                   className="appearance-none block w-full px-3 py-3 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                  onChange={(e) => setPassword(e.target.value)}
                 />
               </div>
             </div>
@@ -83,6 +108,7 @@ const SignupForm = () => {
                   autoComplete="new-password"
                   required
                   className="appearance-none block w-full px-3 py-3 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                  onChange={(e) => setCheckPassword(e.target.value)}
                 />
               </div>
             </div>
