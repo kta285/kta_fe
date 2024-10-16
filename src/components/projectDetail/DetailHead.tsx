@@ -19,10 +19,9 @@ const DetailHead = ({ data, percentage }: detailProps) => {
       console.error('복사 중 오류 발생:', error);
     }
   };
-  // console.log(data);
   const dDay = calculateDaysLeft(data.start_date, data.end_date);
   const goalAmount = formatAmount(data.goal_amount);
-  const endDateFomat = new Date(data.end_date).toISOString().split('T')[0];
+
   return (
     <div className='w-full bg-[#fcfcfc] h-[400px] pt-3'>
       <div className='w-[70%]  mx-auto h-[350px] flex'>
@@ -48,7 +47,9 @@ const DetailHead = ({ data, percentage }: detailProps) => {
           </div>
           <div className='text-start mt-[30px]'>
             <p className='text-h2 font-medium'>
-              종료일: {endDateFomat}
+              종료일:{' '}
+              {data.end_date &&
+                new Date(data.end_date).toISOString().split('T')[0]}
               <span className='bg-[#E8B605] text-[#ffffff] text-h4 mx-[4px]  px-[8px] rounded-lg relative bottom-[2px]'>
                 D-{dDay <= 1 ? 'Day' : dDay}
               </span>
@@ -63,7 +64,7 @@ const DetailHead = ({ data, percentage }: detailProps) => {
                 aria-hidden='true'
                 fill='currentColor'
                 focusable='false'
-                height=''
+                height='30'
                 preserveAspectRatio='xMidYMid meet'
                 viewBox='0 0 24 24'
                 width='30'

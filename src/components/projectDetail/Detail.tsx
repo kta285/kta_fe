@@ -11,7 +11,8 @@ const Detail = ({ data }: ProjectDetail) => {
 
   return (
     <div className='min-h-[600px] w-full'>
-      <DetailHead data={data} percentage={percentage} />
+      {data && <DetailHead data={data} percentage={percentage} />}
+
       <div className='flex  w-[70%] mx-auto min-h-[500px] justify-between'>
         <div className='w-[63%]   min-h-[500px] h-auto'>
           <div
