@@ -26,7 +26,13 @@ const DetailHead = ({ data, percentage }: detailProps) => {
     <div className='w-full bg-[#fcfcfc] h-[400px] pt-3'>
       <div className='w-[70%]  mx-auto h-[350px] flex'>
         <div className='w-[50%] h-[200px] p-[20px] '>
-          <div className='border w-[700px] h-[350px] mx-auto rounded-md'></div>
+          <div className='border w-[700px] h-[350px] mx-auto rounded-md'>
+            <img
+              className='w-full h-full object-fill'
+              src={data.title_img}
+              alt='타이틀섬네일'
+            />
+          </div>
         </div>
         <div className='w-[50%] h-[200px] py-[20px] flex flex-col pl-[80px]'>
           <div className='flex flex-row justify-start mb-[10px]'>
@@ -41,7 +47,7 @@ const DetailHead = ({ data, percentage }: detailProps) => {
             <p className='text-h2 font-medium'>
               목표금액: {goalAmount}원
               <span className='bg-[#062E54] text-[#ffffff] text-h4 mx-[3px]  px-[8px] rounded-lg relative bottom-[2px]'>
-                50%
+                {percentage}%
               </span>
             </p>
           </div>

@@ -27,4 +27,5 @@ export type DetailProps = {
   status: string;
   title: string;
   type: string;
+  title_img: string;
 };
