@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import Project from '../../types/project';
 import { getProjects } from '../../util/getProjects';
+import { Link } from 'react-router-dom';
 
 function formatDate(dateString: string) {
   const date = new Date(dateString);
@@ -44,7 +45,8 @@ const MyList = () => {
         const progress = getProgress(project);
 
         return (
-          <div
+          <Link
+            to={`/project/${project.project_id}`} // 클릭 시 /project/project_id로 이동
             key={project.project_id}
             className='border border-gray-200 rounded-lg shadow-lg mb-6 p-4 flex cursor-pointer'
           >
@@ -52,11 +54,13 @@ const MyList = () => {
               <h2 className='text-md font-bold'>{project.created_by}</h2>
               <img
                 src={
-                  'http://picsum.photos/100/' +
-                  Math.floor(90 + Math.random() * 10)
+                  // 'http://picsum.photos/100/' +
+                  // Math.floor(90 + Math.random() * 10)
+                  project.title_img
                 }
                 alt={project.title}
-                className='w-30 h-30 rounded-full object-cover'
+                className='object-cover'
+                style={{ width: '150px', height: '150px' }}
               />
             </div>
             <div className='flex-grow'>
@@ -83,7 +87,7 @@ const MyList = () => {
                 </span>
               </div>
             </div>
-          </div>
+          </Link>
         );
       })}
     </div>
