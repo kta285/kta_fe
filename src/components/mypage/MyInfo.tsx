@@ -23,6 +23,7 @@ const MyInfo = () => {
     const day = String(date.getDate()).padStart(2, '0'); // 일자가 한 자리일 때 앞에 0을 붙임
     return `${year}-${month}-${day}`;
   };
+  
   //   const [userInfo, setUserInfo] = useState(null);
 
   //   useEffect(() => {

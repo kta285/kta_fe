@@ -2,26 +2,21 @@
 import ProjectMenu from "../components/projectlist/ProjectMenu";
 import ProjectList from "../components/projectlist/ProjectList";
 import { useEffect, useState } from "react";
-import { projectApi } from "../api/requests/projectApi";
+import { getProjects } from "../util/getProjects"
 import type Project from "../types/project";
 import { useParams } from "react-router-dom"; // URL 파라미터를 가져오기 위해 추가
+
+
 
 
 const Projects = () => {
   const [projects, setProjects] = useState<Project[]>([]);
   const { type } = useParams<{ type: string }>();  // URL에서 'type' 파라미터 받아옴
 
-  // 프로젝트 데이터 가져오는 함수
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const data = await projectApi(); // 이미지 데이터를 서버에서 가져옴
-        setProjects(data); // 가져온 데이터로 상태 업데이트
-      } catch (error) {
-        console.error("Error fetching data:", error); // 오류 처리
-      }
-    };
-    fetchData(); // 함수 호출
+    getProjects()
+      .then(setProjects); // 데이터를 상태로 설정
+    ;
   }, []);
 
   const filteredType = type || "all"
