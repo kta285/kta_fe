@@ -1,8 +1,9 @@
 import React, { useRef, useState } from 'react';
 import CustomEditor from './CustomEditor';
-import CustomDatePicker from '../common/datePicker';
+
 import { writeApi } from '../../api/requests/writeApi';
 import { useNavigate } from 'react-router-dom';
+import CustomDatePicker from '../datePicker';
 const WriteForm = () => {
   const title = useRef<HTMLInputElement>(null);
   const navigate = useNavigate();

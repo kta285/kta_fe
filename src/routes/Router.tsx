@@ -1,12 +1,11 @@
 import Layout from '../components/common/Layout';
 import Index from '../page';
-import NotFound from '../page/NotFound';
-import Signup from '../page/Signup';
-import Project from '../page/Project';
+import Faq from '../page/Faq';
 import MyPage from '../page/MyPage';
-
+import NotFound from '../page/NotFound';
+import Project from '../page/Project';
+import Signup from '../page/Signup';
 import Write from '../page/Write';
-
 
 export const routes = [
   {
@@ -19,6 +18,7 @@ export const routes = [
       { path: '/write', element: <Write /> },
       { path: '/signup', element: <Signup/> },
       { path: '/mypage', element: <MyPage /> },
+      { path: '/faq', element: <Faq /> },
       { path: '*', element: <NotFound /> },
     ],
   },
