@@ -4,7 +4,7 @@ import Project from '../../types/project';
 
 export interface ProjectListProps {
     projects: Project[];
-  }
+}
 
 function formatDate(dateString: string) {
     const date = new Date(dateString);
@@ -60,9 +60,10 @@ const ProjectList: React.FC<ProjectListProps> = ({ projects }) => {
 
                     </h3>
                     <p className="text-gray-600 mt-2 my-2">
-                        {project.description.length > 50
+                        {/* {project.description.length > 50
                             ? `${project.description.substring(0, 50)}...`
-                            : project.description}
+                            : project.description} */}
+                        {project.type}
                     </p>
                     <p className='my-2'>
                         <strong>{formatDate(project.start_date)}</strong> 부터 <strong>{formatDate(project.end_date)}</strong> 까지

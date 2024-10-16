@@ -2,6 +2,7 @@ import React from 'react';
 import ProjectCard from './ProjectCard';
 import Button from '../common/Button';
 
+
 const MainProject = () => {
   return (
     <div className="h-[900px] w-[70%] mx-auto ">
