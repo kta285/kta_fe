@@ -17,11 +17,12 @@ export const getProgress = (project: Project) => {
   return parseFloat(((Number(current_amount) / Number(goal_amount)) * 100).toFixed(2));
 };
 
-export const getFundingState = (state: 'ongoing' | 'completed' | 'pending') => {
+export const getFundingState = (state: 'ongoing' | 'completed' | 'pending' | 'failed') => {
   const statusValue = {
     ongoing: '진행중',
     completed: '종료됨',
     pending: '심사중',
+    failed: '취소됨'
   };
   return statusValue[state];
 };

@@ -1,6 +1,7 @@
 import React from 'react';
 import { getProgress } from '../../util/projectUtils';
 import Project from '../../types/project';
+import { Link } from 'react-router-dom';
 
 interface ProjectProps {
   project: Project;  // project라는 이름의 prop
@@ -8,7 +9,9 @@ interface ProjectProps {
 
 const ProjectCard: React.FC<ProjectProps> = ({ project }) => {
   return (
-    <div className="border-[rgb(220,220,220)] border-2 w-[28%] h-[350px] rounded-md mt-10">
+    <Link to={`/projects/detail/${project.project_id}`}
+      key={project.project_id}
+      className="border-[rgb(220,220,220)] border-2 w-[28%] h-[350px] rounded-md mt-10">
       <div className="border-b-[#dcdcdc] h-[80%] w-full relative">
         <span className="absolute bg-[#dcdcdc] px-2 py-1 top-0 left-0">
           {' '}
@@ -26,7 +29,7 @@ const ProjectCard: React.FC<ProjectProps> = ({ project }) => {
         <p className="text-h4 font-semibold">{project.title}</p>
         <p className="text-h4 font-semibold">{getProgress(project)}%</p>
       </div>
-    </div>
+    </Link>
   );
 };
 
