@@ -1,5 +1,5 @@
 import Project from '../../types/project';
-import ProjectItem from '../mypage/ProjectItem';
+import ProjectItem from './ProjectItem';
 
 export interface ProjectListProps {
   projects: Project[]; // projects가 null일 수 있음

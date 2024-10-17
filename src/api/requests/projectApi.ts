@@ -25,6 +25,7 @@ export const projectWriteApi = async ({
     return []; // 에러 시 빈 배열 반환
   }
 };
+
 export const projectDetailApi = async (id: string) => {
   try {
     const ids = Number(id);
@@ -33,5 +34,16 @@ export const projectDetailApi = async (id: string) => {
   } catch (error) {
     console.error('Error fetching images:', error);
     return []; // 에러 시 빈 배열 반환
+  }
+};
+
+export const projectModifyApi = async (id: string, status: string) => {
+  try {
+    const ids = Number(id);
+    const res = await axios.put(baseDirectory + `${ids}/${status}`);
+    return res.data; // 상태 변경 결과 반환
+  } catch (error) {
+    console.error('Error modifying project status:', error);
+    return { error: '프로젝트 상태 변경 중 문제가 발생했습니다.' };
   }
 };
