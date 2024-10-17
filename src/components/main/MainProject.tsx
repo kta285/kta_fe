@@ -1,15 +1,29 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import ProjectCard from './ProjectCard';
 import Button from '../common/Button';
+import { getProjects } from '../../util/projectUtils';
+import Project from '../../types/project';
 
 const MainProject = () => {
+
+  const [projects, setProjects] = useState([]); // 초기값을 props로 설정
+
+  useEffect(() => {
+    getProjects().then(setProjects).catch(console.error);
+  }, []);
+
+  function getRandomItems(arr: [...any], count: number) {
+    return arr.sort(() => Math.random() - 0.5).slice(0, count);
+  }
+  const randomItems = getRandomItems(projects, 6);    // 6개의 항목 랜덤 추출
+
   return (
     <div className='h-[900px] w-[70%] mx-auto '>
       <div className='flex justify-between w-full flex-wrap h-[800px]'>
-        {[1, 2, 3, 4, 5, 6].map((item) => {
+        {randomItems.map((project: Project) => {
           return (
-            <React.Fragment key={item}>
-              <ProjectCard />
+            <React.Fragment key={project.project_id}>
+              <ProjectCard project={project} />
             </React.Fragment>
           );
         })}

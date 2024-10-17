@@ -1,6 +1,3 @@
-// import React, { useEffect, useState } from "react";
-// import axios from "axios";
-
 const MyInfo = () => {
   const userInfo = {
     username: '까미',
@@ -23,23 +20,6 @@ const MyInfo = () => {
     const day = String(date.getDate()).padStart(2, '0'); // 일자가 한 자리일 때 앞에 0을 붙임
     return `${year}-${month}-${day}`;
   };
-  
-  //   const [userInfo, setUserInfo] = useState(null);
-
-  //   useEffect(() => {
-  //     // 서버에서 유저 정보를 가져오는 부분 (비밀번호 제외)
-  //     axios.get("/api/user-info") // 실제 서버 엔드포인트로 교체 필요
-  //       .then(response => {
-  //         setUserInfo(response.data); // 유저 정보를 상태에 저장
-  //       })
-  //       .catch(error => {
-  //         console.error("Error fetching user info:", error);
-  //       });
-  //   }, []);
-
-  if (!userInfo) {
-    return <div>Loading...</div>; // 데이터가 아직 없을 때 로딩 메시지
-  }
 
   return (
     <div className="bg-gray-100 p-6 rounded-lg shadow-lg max-w-md mx-auto mt-10 mb-6">
