@@ -1,6 +1,20 @@
-import React from 'react';
+import { ChangeEvent, FormEvent } from "react";
+interface LoginFormProps {
+  formData: LoginData;
+  handleChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  handleSubmit: (e: FormEvent<HTMLFormElement>) => void;
+}
 
-const LoginForm = () => {
+interface LoginData {
+  email: string;
+  password: string;
+}
+
+const LoginForm = ({
+  formData,
+  handleChange,
+  handleSubmit,
+}: LoginFormProps): JSX.Element => {
   return (
     <div className="bg-gray-100 flex flex-col justify-center items-center h-[80vh] py-12 sm:px-6 lg:px-8">
       <div className="sm:mx-auto sm:w-3/4 sm:max-w-md">
@@ -11,43 +25,31 @@ const LoginForm = () => {
 
       <div className="mt-8 sm:mx-auto sm:w-3/4 sm:max-w-md">
         <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
-          <form className="space-y-6">
-            <div className="flex flex-col items-center">
-              <label
-                htmlFor="email"
-                className="block text-sm text-h4 text-gray-700 text-left w-full"
-              >
-                이메일 주소
-              </label>
-              <div className="mt-1 w-full flex justify-center">
-                <input
-                  id="email"
-                  name="email"
-                  type="email"
-                  autoComplete="email"
-                  required
-                  className="appearance-none block w-full px-3 py-3 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                />
+          <form className="space-y-6" onSubmit={handleSubmit}>
+            {[
+              { id: "email", label: "이메일 주소", type: "email" },
+              { id: "password", label: "비밀번호", type: "password" },
+            ].map(({ id, label, type }) => (
+              <div key={id} className="flex flex-col items-center">
+                <label
+                  htmlFor={id}
+                  className="block text-sm text-h4 text-gray-700 text-left w-full"
+                >
+                  {label}
+                </label>
+                <div className="mt-1 w-full flex justify-center">
+                  <input
+                    id={id}
+                    name={id}
+                    type={type}
+                    required
+                    value={formData[id as keyof typeof formData]}
+                    onChange={handleChange}
+                    className="appearance-none block w-full px-3 py-3 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                  />
+                </div>
               </div>
-            </div>
-
-            <div className="flex flex-col items-center">
-              <label
-                htmlFor="password"
-                className="block text-sm text-h4 text-gray-700 text-left w-full"
-              >
-                비밀번호
-              </label>
-              <div className="mt-1 w-full flex justify-center">
-                <input
-                  id="password"
-                  name="password"
-                  type="password"
-                  required
-                  className="appearance-none block w-full px-3 py-3 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                />
-              </div>
-            </div>
+            ))}
 
             <div className="flex flex-col items-center">
               <button

@@ -9,6 +9,7 @@ import Write from "../page/Write";
 import InquiryList from "../components/faq/InquiryList";
 import MyList from "../components/mypage/MyList";
 import Signup from "../page/Signup";
+import Login from "../page/Login";
 
 export const routes = [
   {
@@ -17,6 +18,7 @@ export const routes = [
     children: [
       { path: "/", element: <Index />, index: true },
       { path: "/signup", element: <Signup /> },
+      { path: "/login", element: <Login /> },
       { path: "/projects", element: <Projects /> },
       { path: "/projects/:type", element: <Projects /> },
       { path: "/projects/detail/:id", element: <ProjectDetail /> },
