@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
 interface Inquiry {
@@ -12,14 +13,17 @@ function InquiryForm() {
   const [content, setContent] = useState<string>('');
   const navigate = useNavigate();
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const inquiries: Inquiry[] = JSON.parse(localStorage.getItem('inquiries') || '[]');
-    inquiries.push({ title, content, date: new Date().toISOString() });
-    localStorage.setItem('inquiries', JSON.stringify(inquiries));
-    navigate('/inquiries');
+    try {
+      await axios.post('http://localhost:3333/inquiries/submit', { title, content });
+      alert('문의가 성공적으로 접수되었습니다.');
+      navigate('/inquiries');
+    } catch (error) {
+      console.error('문의 제출 중 오류 발생:', error);
+      alert('문의 제출 중 오류가 발생했습니다. 다시 시도해 주세요.');
+    }
   };
-
   return (
     <div className="bg-white rounded-lg shadow-md p-6">
       <h2 className="text-2xl font-bold mb-6 text-center text-gray-800">1:1 문의 남기기</h2>
