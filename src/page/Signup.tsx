@@ -1,4 +1,4 @@
-import SignupForm from "../components/signup/SignupForm";
+import SignupForm from "../components/signup/SignUpForm";
 import axios from "axios";
 import { useState } from "react";
 

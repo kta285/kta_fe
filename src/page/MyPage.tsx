@@ -1,12 +1,13 @@
-import MyInfo from "../components/mypage/MyInfo";
-import ProjectCategory from "../components/mypage/ProjectCategory";
-import { Outlet } from "react-router-dom";
+import MyInfo from '../components/mypage/MyInfo';
+import MyMenu from '../components/mypage/MyMenu';
+import { Outlet } from 'react-router-dom';
 
 const MyPage = () => {
+
   return (
     <div>
       <MyInfo />
-      <ProjectCategory />
+      <MyMenu />
       <Outlet />
     </div>
   );
