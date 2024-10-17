@@ -1,6 +1,7 @@
 import LoginForm from "../components/login/LoginForm";
-import axios from "axios";
 import { useState } from "react";
+import { login } from "../api/requests/authApi";
+import { useNavigate } from "react-router-dom";
 
 interface LoginData {
   email: string;
@@ -8,12 +9,12 @@ interface LoginData {
 }
 
 const Login = () => {
+  const navigate = useNavigate();
+
   const [formData, setFormData] = useState<LoginData>({
     email: "",
     password: "",
   });
-
-  const url = "http://localhost:3333";
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -24,11 +25,10 @@ const Login = () => {
     e.preventDefault();
     const { email, password } = formData;
     try {
-      const response = await axios.post(`${url}/user/login`, {
-        email,
-        password,
-      });
+      const response = await login({ email, password });
       console.log(response);
+      alert("로그인 성공!");
+      navigate("/");
     } catch (error) {
       console.error("로그인 중 오류 발생", error);
     }

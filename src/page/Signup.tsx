@@ -1,6 +1,7 @@
 import SignupForm from "../components/signup/SignUpForm";
-import axios from "axios";
 import { useState } from "react";
+import { signup } from "../api/requests/authApi";
+import { useNavigate } from "react-router-dom";
 
 interface SignupData {
   username: string;
@@ -10,14 +11,13 @@ interface SignupData {
 }
 
 const Signup = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState<SignupData>({
     username: "",
     email: "",
     password: "",
     checkPassword: "",
   });
-  const url = "http://localhost:3333";
-
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
@@ -42,12 +42,10 @@ const Signup = () => {
       return alert("비밀번호는 최소 6자리 이상이어야 합니다.");
     }
     try {
-      const response = await axios.post(`${url}/user/signup`, {
-        username,
-        email,
-        password,
-      });
+      const response = await signup({ username, email, password });
       console.log(response);
+      alert("회원가입 성공!");
+      navigate("/");
     } catch (error) {
       console.error("회원가입 중 오류 발생", error);
       alert("회원가입 중 오류 발생");
