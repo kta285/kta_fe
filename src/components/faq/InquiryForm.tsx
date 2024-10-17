@@ -2,12 +2,6 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
-interface Inquiry {
-  title: string;
-  content: string;
-  date: string;
-}
-
 function InquiryForm() {
   const [title, setTitle] = useState<string>('');
   const [content, setContent] = useState<string>('');
