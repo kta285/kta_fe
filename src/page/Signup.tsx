@@ -2,16 +2,32 @@ import SignupForm from "../components/signup/SignupForm";
 import axios from "axios";
 import { useState } from "react";
 
-const Signup = () => {
-  const [username, setUserName] = useState<string>("");
-  const [email, setEmail] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
-  const [checkPassword, setCheckPassword] = useState<string>("");
+interface SignupData {
+  username: string;
+  email: string;
+  password: string;
+  checkPassword: string;
+}
 
+const Signup = () => {
+  const [formData, setFormData] = useState<SignupData>({
+    username: "",
+    email: "",
+    password: "",
+    checkPassword: "",
+  });
   const url = "http://localhost:3333";
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    const { username, email, password, checkPassword } = formData;
+
     if (!username || !email || !password || !checkPassword) {
       return alert("모든 필드를 입력해주세요.");
     }
@@ -41,14 +57,8 @@ const Signup = () => {
   return (
     <div>
       <SignupForm
-        username={username}
-        setUserName={setUserName}
-        email={email}
-        setEmail={setEmail}
-        password={password}
-        setPassword={setPassword}
-        checkPassword={checkPassword}
-        setCheckPassword={setCheckPassword}
+        formData={formData}
+        handleChange={handleChange}
         handleSubmit={handleSubmit}
       />
     </div>
