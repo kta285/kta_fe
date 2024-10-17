@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 
-const ProjectCategory = () => {
+const MyMenu = () => {
 
     return (
         <nav className="flex justify-center space-x-10">
@@ -11,4 +11,4 @@ const ProjectCategory = () => {
     );
 };
 
-export default ProjectCategory;
+export default MyMenu;

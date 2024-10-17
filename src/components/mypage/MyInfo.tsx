@@ -20,15 +20,9 @@ const MyInfo = () => {
     const day = String(date.getDate()).padStart(2, '0'); // 일자가 한 자리일 때 앞에 0을 붙임
     return `${year}-${month}-${day}`;
   };
-  const handleClick = () => {
-    alert('Icon clicked!');
-  };
+
   return (
     <div className="bg-gray-100 p-6 rounded-lg shadow-lg max-w-md mx-auto mt-10 mb-6">
-      <svg onClick={() => alert('SVG clicked!')} width="30" height="30" viewBox="0 0 24 24" style={{ cursor: 'pointer', pointerEvents: 'all' }}>
-        <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"></path>
-      </svg>
-
       <h1 className="text-2xl font-bold text-gray-800 mb-3">
         {userInfo.username}님, 반가워요!
       </h1>

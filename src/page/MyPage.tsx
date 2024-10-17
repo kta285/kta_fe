@@ -1,14 +1,16 @@
 import MyInfo from '../components/mypage/MyInfo';
-import ProjectCategory from '../components/mypage/MyMenu';
+import MyMenu from '../components/mypage/MyMenu';
 import { Outlet } from 'react-router-dom';
 
 const MyPage = () => {
 
-  return (<>
-    <MyInfo />
-    <ProjectCategory />
-    <Outlet />
-  </>);
+  return (
+    <div>
+      <MyInfo />
+      <MyMenu />
+      <Outlet />
+    </div>
+  );
 };
 
 export default MyPage;
