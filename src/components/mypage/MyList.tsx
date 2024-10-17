@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import Project from '../../types/project';
 import { getProjects } from '../../util/projectUtils';
-import ProjectItem from './ProjectItem';
+import MyProjectItem from './MyProjectItem';
 
 const MyList = () => {
   const [projects, setProjects] = useState([]); // 초기값을 props로 설정
@@ -19,7 +19,7 @@ const MyList = () => {
   return (
     <div className='container w-[70%] mx-auto'>
       {projects.map((project: Project) => {
-        return (<ProjectItem project={project} />);
+        return (<MyProjectItem project={project} />);
       })}
     </div>
   );
