@@ -1,13 +1,12 @@
-interface ProjectMenuProps {
-    setSelectedType: (type: string) => void; // 타입 정의
-}
+import { Link } from "react-router-dom";
 
-const ProjectMenu = ({ setSelectedType }: ProjectMenuProps) => {
+const ProjectMenu = () => {
     return (<nav className="flex justify-center space-x-10">
-        <a onClick={() => setSelectedType("all")} className="font-medium px-3 py-5 text-slate-700 rounded-lg hover:bg-slate-100 hover:text-slate-900">all</a>
-        <a onClick={() => setSelectedType("promotion")} className="font-medium px-3 py-5 text-slate-700 rounded-lg hover:bg-slate-100 hover:text-slate-900">promotion</a>
-        <a onClick={() => setSelectedType("event")} className="font-medium px-3 py-5 text-slate-700 rounded-lg hover:bg-slate-100 hover:text-slate-900">event</a>
-        <a onClick={() => setSelectedType("goods")} className="font-medium px-3 py-5 text-slate-700 rounded-lg hover:bg-slate-100 hover:text-slate-900">goods</a>
+        <Link to="/projects/all" className="font-medium px-3 py-5 text-slate-700 rounded-lg hover:bg-slate-100 hover:text-slate-900">All</Link>
+        <Link to="/projects/promotion" className="font-medium px-3 py-5 text-slate-700 rounded-lg hover:bg-slate-100 hover:text-slate-900">Promotion</Link>
+        <Link to="/projects/event" className="font-medium px-3 py-5 text-slate-700 rounded-lg hover:bg-slate-100 hover:text-slate-900">Event</Link>
+        <Link to="/projects/goods" className="font-medium px-3 py-5 text-slate-700 rounded-lg hover:bg-slate-100 hover:text-slate-900">Goods</Link>
+        <Link to="/projects/etc" className="font-medium px-3 py-5 text-slate-700 rounded-lg hover:bg-slate-100 hover:text-slate-900">Etc</Link>
     </nav>)
 };
 

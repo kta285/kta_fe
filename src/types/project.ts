@@ -11,4 +11,21 @@ export default interface Project {
   start_date: string;
   end_date: string;
   type: string;
+  title_img: string;
 }
+export type ProjectDetail = {
+  data: DetailProps;
+};
+export type DetailProps = {
+  created_by: string;
+  current_amount: number;
+  description: string;
+  end_date: string;
+  goal_amount: string;
+  project_id: number;
+  start_date: string;
+  status: string;
+  title: string;
+  type: string;
+  title_img: string;
+};
