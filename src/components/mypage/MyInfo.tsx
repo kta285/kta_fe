@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { userInfoApi, userModifyApi } from "../../api/requests/userApi";
 import { useNavigate } from "react-router-dom";
-import { formatDate } from "../../util/projectUtils";
 import UserInfoForm from "./UserInfoForm";
 import Modal from "./Modal";
 
@@ -41,12 +40,6 @@ const MyInfo = () => {
   //   user_type: 'fan',
   //   created_at: '2024-10-11 15:10:01',
   // };
-
-  const userTypeToKor = (userType: "fan" | "influencer" | "admin") => {
-    const types = { fan: "팬", influencer: "인플루언서", admin: "관리자" };
-
-    return types[userType];
-  };
 
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);

@@ -1,19 +1,36 @@
 import { useEffect, useState } from 'react';
 import Project from '../../types/project';
 import MyProjectItem from './MyProjectItem';
-import { myProjectApi } from '../../api/requests/projectApi';
+import { getProjects } from '../../util/projectUtils';
+import { userInfoApi } from '../../api/requests/userApi';
 
-const MyList = () => {
+const makeFundingList = (userFunding: null | string) => {
+  if (userFunding === null) return [];
+  else return userFunding.split(",");
+}
+
+const FundingList = () => {
   const [projects, setProjects] = useState([]);
   const [isReady, setIsReady] = useState(false); // 렌더링 완료 상태를 관리
   const userId = sessionStorage.getItem("user_id") || "3"; // 사용자 ID 가져오기
+
+
 
   // 렌더링이 완료된 후에 데이터를 가져오는 로직
   useEffect(() => {
     const fetchProjects = async () => {
       try {
-        const data = await myProjectApi(userId);
-        setProjects(data); // 프로젝트 데이터 설정
+        const projects = await getProjects();
+        const userInfo = await userInfoApi(userId); // userId를 숫자로 전달
+        const fundedList = makeFundingList(userInfo.funding);
+
+        const filteredProjects = projects.filter((project: Project) => {
+          return fundedList.includes(String(project.project_id));
+        });
+
+        setProjects(filteredProjects); // 프로젝트 데이터 설정
+
+
       } catch (error: any) {
         console.log("불러오기 실패: ", error.message);
       }
@@ -39,4 +56,4 @@ const MyList = () => {
   );
 };
 
-export default MyList;
+export default FundingList;
