@@ -15,19 +15,25 @@ export const projectApi = async () => {
 };
 
 export const myProjectApi = async (userId: string) => {
-  const URL = baseDirectory + "my";
+  const URL = `${baseDirectory}my`;
 
   try {
     const res = await axios.get(URL, {
-      headers: { 'user_id': userId }
+      headers: { 'user_id': userId } // userId를 헤더로 추가
     });
 
     return res.data; // 데이터 반환
-  } catch (error) {
-    console.error('Error fetching images:', error);
-    return []; // 에러 시 빈 배열 반환
+  } catch (error: any) {
+    // 서버에서 온 에러 메시지 처리
+    if (error.response) {
+      throw new Error(error.response.data.message);
+    } else {
+      console.error('Error fetching projects:', error);
+      throw new Error('서버와 통신 중 오류가 발생했습니다.');
+    }
   }
 };
+
 
 
 export const projectWriteApi = async ({
