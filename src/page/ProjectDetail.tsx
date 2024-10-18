@@ -18,7 +18,7 @@ const ProjectDetail = () => {
     fetchData();
   }, [id, isDetail]);
 
-  return <Detail data={detail[0]} isData={setIsDetail} />;
+  return detail && <Detail data={detail[0]} isData={setIsDetail} />;
 };
 
 export default ProjectDetail;
