@@ -1,14 +1,24 @@
 import { useEffect, useState } from 'react';
 import Project from '../../types/project';
-import { getProjects } from '../../util/projectUtils';
+// import { getProjects } from '../../util/projectUtils';
 import MyProjectItem from './MyProjectItem';
+import { myProjectApi } from '../../api/requests/projectApi';
 
 const MyList = () => {
   const [projects, setProjects] = useState([]); // 초기값을 props로 설정
+  const userId = sessionStorage.getItem('user_id') || "11";
+
+  // useEffect(() => {
+  //   getProjects().then(setProjects).catch(console.error);
+  // }, []);
 
   useEffect(() => {
-    getProjects().then(setProjects).catch(console.error);
-  }, []);
+    myProjectApi(userId)
+      .then(data => { setProjects(data)
+        console.log(data);
+       })
+      .catch(console.error);
+  }, [userId]);
 
   if (projects.length === 0) {
     return (
