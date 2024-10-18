@@ -1,7 +1,7 @@
-import LoginForm from "../components/login/LoginForm";
-import { useState } from "react";
-import { login } from "../api/requests/authApi";
-import { useNavigate } from "react-router-dom";
+import LoginForm from '../components/login/LoginForm';
+import { useState } from 'react';
+import { login } from '../api/requests/authApi';
+import { useNavigate } from 'react-router-dom';
 
 interface LoginData {
   email: string;
@@ -12,8 +12,8 @@ const Login = () => {
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState<LoginData>({
-    email: "",
-    password: "",
+    email: '',
+    password: '',
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -27,11 +27,11 @@ const Login = () => {
     try {
       const response = await login({ email, password });
       console.log(response);
-      alert("로그인 성공!");
-      navigate("/");
+      alert('로그인 성공!');
+      navigate('/');
       window.location.reload();
     } catch (error) {
-      console.error("로그인 중 오류 발생", error);
+      console.error('로그인 중 오류 발생', error);
     }
   };
 

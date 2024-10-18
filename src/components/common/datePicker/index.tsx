@@ -32,8 +32,6 @@ const CustomDatePicker = ({
     '11월',
     '12월',
   ];
-  // defaultValue가 string인 경우 Date 객체로 변환
-  console.log(defaultValue);
 
   const parsedDefaultDate = defaultValue
     ? new Date(defaultValue) // ISO 8601 형식이라면 이처럼 Date 객체로 변환 가능
