@@ -28,8 +28,8 @@ const FundingList = () => {
           return fundedList.includes(String(project.project_id));
         });
 
+        console.log("fundingList: " + fundedList);
         setProjects(filteredProjects); // 프로젝트 데이터 설정
-
 
       } catch (error: any) {
         console.log("불러오기 실패: ", error.message);

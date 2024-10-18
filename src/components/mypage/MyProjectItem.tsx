@@ -10,6 +10,7 @@ interface ProjectItemProps {
 
 const MyProjectItem: React.FC<ProjectItemProps> = ({ project }) => {
     const [status, setStatus] = useState(project.status); // 프로젝트 상태 관리
+    const userId = sessionStorage.getItem("user_id");
 
     const progress = getProgress(project);
 
@@ -35,7 +36,7 @@ const MyProjectItem: React.FC<ProjectItemProps> = ({ project }) => {
                 className='flex items-center flex-grow'
             >
                 <div className='flex-shrink-0 mr-6'>
-                    <h2 className='text-md font-bold text-center'>{project.created_by}</h2>
+                    {/* <h2 className='text-md font-bold text-center'>{project.created_by}</h2> */}
                     <img
                         src={project.title_img}
                         alt={project.title}
@@ -68,22 +69,24 @@ const MyProjectItem: React.FC<ProjectItemProps> = ({ project }) => {
             </Link>
 
             {/* 상태 변경 select 박스 */}
-            <div className='flex flex-col items-center border border-gray-300 rounded-lg p-4'>
-                <label htmlFor='status' className='mb-2 text-xl font-bold'>
-                    상태 변경
-                </label>
-                <select
-                    id='status'
-                    value={status}
-                    onChange={handleStatusChange}
-                    className='border border-gray-300 rounded-lg p-2 w-32'
-                >
-                    <option value="pending">심사중</option>
-                    <option value="ongoing">진행중</option>
-                    <option value="completed">종료됨</option>
-                    <option value="failed">취소됨</option>
-                </select>
-            </div>
+
+            {// eslint-disable-next-line
+                userId == project.created_by ? <div className='flex flex-col items-center border border-gray-300 rounded-lg p-4'>
+                    <label htmlFor='status' className='mb-2 text-xl font-bold'>
+                        상태 변경
+                    </label>
+                    <select
+                        id='status'
+                        value={status}
+                        onChange={handleStatusChange}
+                        className='border border-gray-300 rounded-lg p-2 w-32'
+                    >
+                        <option value="pending">심사중</option>
+                        <option value="ongoing">진행중</option>
+                        <option value="completed">종료됨</option>
+                        <option value="failed">취소됨</option>
+                    </select>
+                </div> : ""}
         </div>
     );
 };
