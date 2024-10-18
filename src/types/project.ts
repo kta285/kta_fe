@@ -23,6 +23,7 @@ export type DetailProps = {
   end_date: string;
   goal_amount: string;
   project_id: number;
+
   start_date: string;
   status: string;
   title: string;

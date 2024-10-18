@@ -30,6 +30,7 @@ const MainProject = () => {
         })}
       </div>
       <Button
+        disabled={false}
         onClick={() => navigate('projects')}
         text={'모든프로젝트보기'}
         styles={

@@ -4,15 +4,19 @@ import { calculateDaysLeft } from '../../util/calculateDaysLeft';
 import { formatAmount } from '../../util/formatAmount';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { formatDate } from '../../util/projectUtils';
-import { projectDeleteApi } from '../../api/requests/projectApi';
+import {
+  projectDeleteApi,
+  projectSupportApi,
+} from '../../api/requests/projectApi';
 
 interface detailProps {
   data: DetailProps;
   percentage: number;
+  isData: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 
-const DetailHead = ({ data, percentage }: detailProps) => {
+const DetailHead = ({ data, percentage, isData }: detailProps) => {
   const { id } = useParams();
   const sessionUser = sessionStorage.getItem('user_id') ?? null;
   const navigate = useNavigate();
@@ -26,7 +30,7 @@ const DetailHead = ({ data, percentage }: detailProps) => {
       console.error('복사 중 오류 발생:', error);
     }
   };
-  const dDay = calculateDaysLeft(data.start_date, data.end_date);
+  const dDay = calculateDaysLeft(data.end_date);
   const goalAmount = formatAmount(data.goal_amount);
   const deleteProject = async () => {
     try {
@@ -43,7 +47,24 @@ const DetailHead = ({ data, percentage }: detailProps) => {
       console.log('오류:', error);
     }
   };
-
+  const supportProject = async () => {
+    if (sessionUser === data.created_by.toString()) {
+      return alert('본인꺼에는 펀딩이 안됩니다.');
+    }
+    try {
+      const res = await projectSupportApi(Number(id));
+      if (res && res.status === 200) {
+        // res가 null이 아닌 경우에만 실행
+        isData((prev) => !prev);
+        alert('펀딩완료');
+      } else {
+        // res가 null인 경우 처리
+        console.log('삭제 중 문제가 발생했습니다.');
+      }
+    } catch (error) {
+      console.log('오류:', error);
+    }
+  };
   return (
     <div className='w-full bg-[#fcfcfc] h-[400px] pt-3'>
       <div className='w-[70%]  mx-auto h-[350px] flex'>
@@ -89,7 +110,7 @@ const DetailHead = ({ data, percentage }: detailProps) => {
             <p className='text-h2 font-medium'>
               종료일: {data.end_date && formatDate(data.end_date)}
               <span className='bg-[#E8B605] text-[#ffffff] text-h4 mx-[4px]  px-[8px] rounded-lg relative bottom-[2px]'>
-                D-{dDay <= 1 ? 'Day' : dDay}
+                {dDay}
               </span>
             </p>
           </div>
@@ -116,6 +137,8 @@ const DetailHead = ({ data, percentage }: detailProps) => {
             </button>
 
             <Button
+              onClick={supportProject}
+              disabled={false}
               text={'Support'}
               styles={
                 'rounded-lg bg-[#000] text-[#ffffff] h-[50px] mt-[20px] w-[140px]'
