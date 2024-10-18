@@ -5,26 +5,31 @@ import MyProjectItem from './MyProjectItem';
 import { myProjectApi } from '../../api/requests/projectApi';
 
 const MyList = () => {
-  const [projects, setProjects] = useState([]); // 초기값을 props로 설정
-  const userId = sessionStorage.getItem('user_id') || "11";
+  const [projects, setProjects] = useState([]);
+  const [isReady, setIsReady] = useState(false); // 렌더링 완료 상태를 관리
+  const userId = sessionStorage.getItem("user_id") || "3"; // 사용자 ID 가져오기
 
-  // useEffect(() => {
-  //   getProjects().then(setProjects).catch(console.error);
-  // }, []);
-
+  // 렌더링이 완료된 후에 데이터를 가져오는 로직
   useEffect(() => {
-    myProjectApi(userId)
-      .then(data => { setProjects(data)
-        console.log(data);
-       })
-      .catch(console.error);
-  }, [userId]);
+    const fetchProjects = async () => {
+      try {
+        const data = await myProjectApi(userId);
+        setProjects(data); // 프로젝트 데이터 설정
+      } catch (error: any) {
+        console.log("불러오기 실패: ", error.message);
+      }
+    };
 
-  if (projects.length === 0) {
-    return (
-      <div className='container mx-auto my-10'>표시할 내용이 없습니다.</div>
-    );
-  }
+    // 렌더링이 완료된 후(isReady가 true일 때) 데이터 가져오기
+    if (isReady) {
+      fetchProjects();
+    }
+  }, [isReady, userId]);
+
+  // 렌더링이 완료되었을 때 isReady를 true로 설정
+  useEffect(() => {
+    setIsReady(true);
+  }, []);
 
   return (
     <div className='container w-[70%] mx-auto'>
