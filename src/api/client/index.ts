@@ -11,6 +11,8 @@ axiosInstance.interceptors.request.use((config) => {
   const userId = localUser ? localUser : sessionUser;
   if (userId && userId.length > 0) {
     config.headers.Authorization = `${userId}`;
+  } else if (!userId) {
+    config.headers.Authorization = null;
   }
   return config;
 });

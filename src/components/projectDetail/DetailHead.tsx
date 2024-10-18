@@ -19,7 +19,10 @@ interface detailProps {
 const DetailHead = ({ data, percentage, isData }: detailProps) => {
   const { id } = useParams();
   const sessionUser = sessionStorage.getItem('user_id') ?? null;
+  console.log(sessionUser);
+
   const navigate = useNavigate();
+  const isProjectUserId = data.created_by.toString() ?? '-1';
   const handleCopy = async () => {
     const url = window.location.href; // 현재 페이지의 URL을 가져옴
     try {
@@ -48,7 +51,10 @@ const DetailHead = ({ data, percentage, isData }: detailProps) => {
     }
   };
   const supportProject = async () => {
-    if (sessionUser === data.created_by.toString()) {
+    if (!sessionUser) {
+      return navigate('/login');
+    }
+    if (sessionUser === isProjectUserId) {
       return alert('본인꺼에는 펀딩이 안됩니다.');
     }
     try {
@@ -65,6 +71,7 @@ const DetailHead = ({ data, percentage, isData }: detailProps) => {
       console.log('오류:', error);
     }
   };
+
   return (
     <div className='w-full bg-[#fcfcfc] h-[400px] pt-3'>
       <div className='w-[70%]  mx-auto h-[350px] flex'>
@@ -82,7 +89,7 @@ const DetailHead = ({ data, percentage, isData }: detailProps) => {
             <span className='px-[10px] py-10px bg-gray400 text-[#ffffff] font-semibold'>
               {data.type}
             </span>
-            {sessionUser === data.created_by.toString() && (
+            {sessionUser === isProjectUserId && (
               <div className='text-gray-400'>
                 <Link to={`/modify/${id}`}>
                   <span className='mx-2 cursor-pointer'>수정</span>
