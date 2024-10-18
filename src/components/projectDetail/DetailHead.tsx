@@ -5,11 +5,14 @@ import { formatAmount } from '../../util/formatAmount';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { formatDate } from '../../util/projectUtils';
 import { projectDeleteApi } from '../../api/requests/projectApi';
+import { useEffect, useState } from 'react';
+import { userInfoApi } from '../../api/requests/userApi';
 
 interface detailProps {
   data: DetailProps;
   percentage: number;
 }
+
 
 const DetailHead = ({ data, percentage }: detailProps) => {
   const { id } = useParams();
@@ -42,6 +45,19 @@ const DetailHead = ({ data, percentage }: detailProps) => {
       console.log('오류:', error);
     }
   };
+
+  const userId = sessionStorage.getItem("user_id") || "3";
+  const [userInfo, setUserInfo] = useState();
+
+  useEffect(() => {
+    const funding = [];
+    userInfoApi(userId)
+      .then((data) => {
+        setUserInfo(data);
+        console.log(data);
+      })
+      .catch(console.error);
+  }, [userId]);
 
   return (
     <div className='w-full bg-[#fcfcfc] h-[400px] pt-3'>
