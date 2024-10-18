@@ -81,7 +81,7 @@ const MyProjectItem: React.FC<ProjectItemProps> = ({ project }) => {
                         onChange={handleStatusChange}
                         className='border border-gray-300 rounded-lg p-2 w-32'
                     >
-                        <option value="pending">심사중</option>
+                        {/* <option value="pending">심사중</option> */}
                         <option value="ongoing">진행중</option>
                         <option value="completed">종료됨</option>
                         <option value="failed">취소됨</option>
