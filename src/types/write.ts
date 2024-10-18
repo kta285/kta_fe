@@ -3,6 +3,7 @@ export interface WriteProps {
 }
 
 export type WriteBodyProps = {
+  id?: number;
   title: string;
   amount: string;
   category: string;
