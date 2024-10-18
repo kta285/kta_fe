@@ -57,7 +57,6 @@ const MyInfo = () => {
   const handleLogout = () => {
     sessionStorage.removeItem("user_id");
     navigate("/");
-    window.location.reload();
   };
 
   return (

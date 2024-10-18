@@ -1,4 +1,5 @@
 import { ChangeEvent, FormEvent } from "react";
+import { Link } from "react-router-dom";
 interface LoginFormProps {
   formData: LoginData;
   handleChange: (e: ChangeEvent<HTMLInputElement>) => void;
@@ -60,6 +61,14 @@ const LoginForm = ({
               </button>
             </div>
           </form>
+          <div className="mt-4 text-center">
+            <p className="text-sm text-gray-600">
+              회원이 아니신가요?{" "}
+              <Link to="/signup" className="text-blue-600 hover:underline">
+                회원가입
+              </Link>
+            </p>
+          </div>
         </div>
       </div>
     </div>
