@@ -1,14 +1,15 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Editor as TinyMCEReactEditor } from '@tinymce/tinymce-react';
 import type { Editor as TinyMCEEditor } from 'tinymce';
 
 type content = {
+  defaultValue?: string;
   content: string;
   setContent: React.Dispatch<React.SetStateAction<string>>;
 };
 
 // eslint-disable-next-line
-const CustomEditor = ({ content, setContent }: content) => {
+const CustomEditor = ({ defaultValue, content, setContent }: content) => {
   const innerRef = useRef<TinyMCEEditor | null>(null); // TinyMCE 에디터 인스턴스 참조
   const uploadRef = useRef<HTMLInputElement>(null); // 파일 업로드 인풋 참조
   // eslint-disable-next-line
@@ -20,18 +21,24 @@ const CustomEditor = ({ content, setContent }: content) => {
   const onChange = (content: string) => {
     setContent(content); // 내용 확인 (여기서 상태 업데이트나 부모 컴포넌트로 전달 가능)
   };
+  // 에디터가 초기화된 후 defaultValue가 있을 때만 적용
+  useEffect(() => {
+    if (innerRef.current && isInit && defaultValue) {
+      innerRef.current.setContent(defaultValue); // 에디터에 초기 값 설정
+    }
+  }, [defaultValue, isInit]);
 
   return (
-    <div className="w-[80%] mx-auto">
+    <div className='w-[80%] mx-auto'>
       <label
-        htmlFor="category"
-        className="block text-sm font-medium text-gray-700 mb-1"
+        htmlFor='category'
+        className='block text-sm font-medium text-gray-700 mb-1'
       >
         본문내용
       </label>
       <TinyMCEReactEditor
-        textareaName="editor-textarea"
-        apiKey="ca91k77cz47t7cpnlgu9v831gbbb5d8fj8535pry43ie9ab9" // TinyMCE API 키 입력
+        textareaName='editor-textarea'
+        apiKey='ca91k77cz47t7cpnlgu9v831gbbb5d8fj8535pry43ie9ab9' // TinyMCE API 키 입력
         init={{
           height: 400,
           menubar: true,
@@ -94,7 +101,7 @@ const CustomEditor = ({ content, setContent }: content) => {
           setIsInit(true); // 에디터 초기화 완료
         }}
       />
-      <input type="file" ref={uploadRef} style={{ display: 'none' }} />{' '}
+      <input type='file' ref={uploadRef} style={{ display: 'none' }} />{' '}
       {/* 이미지 업로드용 숨김 인풋 */}
     </div>
   );
