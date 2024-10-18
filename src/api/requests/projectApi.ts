@@ -14,6 +14,22 @@ export const projectApi = async () => {
   }
 };
 
+export const myProjectApi = async (userId: string) => {
+  const URL = baseDirectory + "my";
+
+  try {
+    const res = await axios.get(URL, {
+      headers: { 'user_id': userId }
+    });
+
+    return res.data; // 데이터 반환
+  } catch (error) {
+    console.error('Error fetching images:', error);
+    return []; // 에러 시 빈 배열 반환
+  }
+};
+
+
 export const projectWriteApi = async ({
   body,
 }: WriteProps): Promise<AxiosResponse | []> => {
@@ -47,7 +63,7 @@ export const projectPutApi = async ({
   }
 };
 
-export const projectModifyApi = async (id: string, status: string) => {
+export const projectStatusModifyApi = async (id: string, status: string) => {
   try {
     const ids = Number(id);
     const res = await axios.put(baseDirectory + `${ids}/${status}`);

@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Link } from "react-router-dom";
 import { formatDate, getFundingState, getProgress } from "../../util/projectUtils";
 import Project from '../../types/project';
-import { projectModifyApi } from '../../api/requests/projectApi';
+import { projectStatusModifyApi } from '../../api/requests/projectApi';
 
 interface ProjectItemProps {
     project: Project;
@@ -19,7 +19,7 @@ const MyProjectItem: React.FC<ProjectItemProps> = ({ project }) => {
 
         // API 호출
         try {
-            await projectModifyApi(project.project_id.toString(), newStatus);
+            await projectStatusModifyApi(project.project_id.toString(), newStatus);
             console.log(`프로젝트 상태 변경 : "${newStatus}"`);
         } catch (error) {
             console.error('프로젝트 상태 변경 중 오류 발생:', error);
