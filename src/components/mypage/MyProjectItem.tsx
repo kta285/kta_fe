@@ -20,7 +20,7 @@ const MyProjectItem: React.FC<ProjectItemProps> = ({ project }) => {
         // API 호출
         try {
             await projectModifyApi(project.project_id.toString(), newStatus);
-            console.log('프로젝트 상태가 성공적으로 변경되었습니다.');
+            console.log(`프로젝트 상태 변경 : "${newStatus}"`);
         } catch (error) {
             console.error('프로젝트 상태 변경 중 오류 발생:', error);
         }
