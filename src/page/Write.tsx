@@ -4,7 +4,7 @@ import WriteForm from '../components/write/WriteForm';
 const Write = () => {
   return (
     <div>
-      <WriteForm />
+      <WriteForm type={'write'} />
     </div>
   );
 };

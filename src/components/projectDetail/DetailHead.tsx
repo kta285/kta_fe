@@ -2,6 +2,9 @@ import Button from '../common/Button';
 import { DetailProps } from '../../types/project';
 import { calculateDaysLeft } from '../../util/calculateDaysLeft';
 import { formatAmount } from '../../util/formatAmount';
+import { Link, useNavigate, useParams } from 'react-router-dom';
+import { formatDate } from '../../util/projectUtils';
+import { projectDeleteApi } from '../../api/requests/projectApi';
 
 interface detailProps {
   data: DetailProps;
@@ -9,6 +12,8 @@ interface detailProps {
 }
 
 const DetailHead = ({ data, percentage }: detailProps) => {
+  const { id } = useParams();
+  const navigate = useNavigate();
   const handleCopy = async () => {
     const url = window.location.href; // 현재 페이지의 URL을 가져옴
     try {
@@ -21,24 +26,48 @@ const DetailHead = ({ data, percentage }: detailProps) => {
   };
   const dDay = calculateDaysLeft(data.start_date, data.end_date);
   const goalAmount = formatAmount(data.goal_amount);
-
+  const deleteProject = async () => {
+    try {
+      const res = await projectDeleteApi(Number(id));
+      if (res && res.status === 200) {
+        // res가 null이 아닌 경우에만 실행
+        console.log(res.data.message);
+        navigate('/projects');
+      } else {
+        // res가 null인 경우 처리
+        console.log('삭제 중 문제가 발생했습니다.');
+      }
+    } catch (error) {
+      console.log('오류:', error);
+    }
+  };
   return (
     <div className='w-full bg-[#fcfcfc] h-[400px] pt-3'>
       <div className='w-[70%]  mx-auto h-[350px] flex'>
         <div className='w-[50%] h-[200px] p-[20px] '>
-          <div className='border w-[700px] h-[350px] mx-auto rounded-md'>
+          <div className=' w-full h-[350px] mx-auto rounded-md px-[20px]'>
             <img
-              className='w-full h-full object-fill'
+              className='w-full h-full object-fill rounded-md '
               src={data.title_img}
               alt='타이틀섬네일'
             />
           </div>
         </div>
         <div className='w-[50%] h-[200px] py-[20px] flex flex-col pl-[80px]'>
-          <div className='flex flex-row justify-start mb-[10px]'>
+          <div className='flex flex-row justify-between mb-[10px]'>
             <span className='px-[10px] py-10px bg-gray400 text-[#ffffff] font-semibold'>
               {data.type}
             </span>
+            <div className='text-gray-400'>
+              <Link to={`/modify/${id}`}>
+                <span className='mx-2 cursor-pointer'>수정</span>
+              </Link>
+              <button style={{ border: 'none' }}>
+                <span className='mx-2 cursor-pointer' onClick={deleteProject}>
+                  삭제
+                </span>
+              </button>
+            </div>
           </div>
           <div className='border-b text-start pb-[10px]'>
             <p className='text-h1 font-bold'>{data.title}</p>
@@ -53,9 +82,7 @@ const DetailHead = ({ data, percentage }: detailProps) => {
           </div>
           <div className='text-start mt-[30px]'>
             <p className='text-h2 font-medium'>
-              종료일:{' '}
-              {data.end_date &&
-                new Date(data.end_date).toISOString().split('T')[0]}
+              종료일: {data.end_date && formatDate(data.end_date)}
               <span className='bg-[#E8B605] text-[#ffffff] text-h4 mx-[4px]  px-[8px] rounded-lg relative bottom-[2px]'>
                 D-{dDay <= 1 ? 'Day' : dDay}
               </span>
