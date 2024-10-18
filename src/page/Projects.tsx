@@ -21,10 +21,12 @@ const Projects = () => {
       ? projects // 'all'일 때는 모든 프로젝트를 보여줌
       : projects.filter((project) => project.type === type); // 선택된 타입에 따라 필터링
 
-  return (<>
-    <ProjectMenu />
-    <ProjectList projects={filteredProjects} />
-  </>);
+  return (
+    <>
+      <ProjectMenu />
+      <ProjectList projects={filteredProjects} />
+    </>
+  );
 };
 
 export default Projects;

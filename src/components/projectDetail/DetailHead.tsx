@@ -13,6 +13,7 @@ interface detailProps {
 
 const DetailHead = ({ data, percentage }: detailProps) => {
   const { id } = useParams();
+  const sessionUser = sessionStorage.getItem('user_id') ?? null;
   const navigate = useNavigate();
   const handleCopy = async () => {
     const url = window.location.href; // 현재 페이지의 URL을 가져옴
@@ -31,7 +32,7 @@ const DetailHead = ({ data, percentage }: detailProps) => {
       const res = await projectDeleteApi(Number(id));
       if (res && res.status === 200) {
         // res가 null이 아닌 경우에만 실행
-        console.log(res.data.message);
+
         navigate('/projects');
       } else {
         // res가 null인 경우 처리
@@ -41,6 +42,7 @@ const DetailHead = ({ data, percentage }: detailProps) => {
       console.log('오류:', error);
     }
   };
+
   return (
     <div className='w-full bg-[#fcfcfc] h-[400px] pt-3'>
       <div className='w-[70%]  mx-auto h-[350px] flex'>
@@ -58,16 +60,18 @@ const DetailHead = ({ data, percentage }: detailProps) => {
             <span className='px-[10px] py-10px bg-gray400 text-[#ffffff] font-semibold'>
               {data.type}
             </span>
-            <div className='text-gray-400'>
-              <Link to={`/modify/${id}`}>
-                <span className='mx-2 cursor-pointer'>수정</span>
-              </Link>
-              <button style={{ border: 'none' }}>
-                <span className='mx-2 cursor-pointer' onClick={deleteProject}>
-                  삭제
-                </span>
-              </button>
-            </div>
+            {sessionUser === data.created_by.toString() && (
+              <div className='text-gray-400'>
+                <Link to={`/modify/${id}`}>
+                  <span className='mx-2 cursor-pointer'>수정</span>
+                </Link>
+                <button style={{ border: 'none' }}>
+                  <span className='mx-2 cursor-pointer' onClick={deleteProject}>
+                    삭제
+                  </span>
+                </button>
+              </div>
+            )}
           </div>
           <div className='border-b text-start pb-[10px]'>
             <p className='text-h1 font-bold'>{data.title}</p>
