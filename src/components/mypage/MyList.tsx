@@ -18,8 +18,8 @@ const MyList = () => {
 
   return (
     <div className='container w-[70%] mx-auto'>
-      {projects.map((project: Project) => {
-        return (<MyProjectItem project={project} />);
+      {projects.map((project: Project, i) => {
+        return (<MyProjectItem key={i} project={project} />);
       })}
     </div>
   );

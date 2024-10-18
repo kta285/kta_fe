@@ -6,11 +6,11 @@ const baseDirectory = '/project/';
 
 export const projectApi = async () => {
   try {
-    const res = await axios.get(baseDirectory + 'all');
-    return res.data; // 데이터 반환
+    const res = await axios.get(baseDirectory + "all"); // 프로젝트 데이터를 가져옴
+    return res; // Project[] 반환
   } catch (error) {
-    console.error('Error fetching images:', error);
-    return []; // 에러 시 빈 배열 반환
+    console.error('Error fetching data:', error); // 오류 처리
+    return []; // 에러가 발생할 경우 빈 배열 반환
   }
 };
 

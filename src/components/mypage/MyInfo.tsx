@@ -1,11 +1,39 @@
+import { useEffect, useState } from "react";
+import { userInfoApi } from "../../api/requests/userApi";
+
+interface UserInfo {
+  user_id: number;
+  username: string;
+  email: string;
+  password: string;
+  user_type: 'fan' | 'influencer' | 'admin';
+  created_at: string;
+}
+
 const MyInfo = () => {
-  const userInfo = {
-    username: '까미',
-    email: 'dog@bow.wow',
-    password: 1234,
-    user_type: 'fan',
-    created_at: '2024-10-11 15:10:01',
-  };
+  const userId = sessionStorage.getItem('user_id') || "3";
+  console.log(userId);
+
+  const [userInfo, setUserInfo] = useState<UserInfo | null>(null);
+
+  useEffect(() => {
+    userInfoApi(userId)
+      .then(data => {
+        setUserInfo(data);
+        console.log(data);
+      }
+      )
+      .catch(console.error);
+  }, [userId]);
+
+  // const userInfo = {
+  //   user_id: 3,
+  //   username: '까미',
+  //   email: 'dog@bow.wow',
+  //   password: 1234,
+  //   user_type: 'fan',
+  //   created_at: '2024-10-11 15:10:01',
+  // };
 
   const userTypeToKor = (userType: 'fan' | 'influencer' | 'admin') => {
     const types = { fan: '팬', influencer: '인플루언서', admin: '관리자' };
@@ -21,17 +49,21 @@ const MyInfo = () => {
     return `${year}-${month}-${day}`;
   };
 
+  if (!userInfo) {
+    return <div>Loading...</div>; // userInfo가 null일 경우 로딩 표시
+  }
+
   return (
     <div className="bg-gray-100 p-6 rounded-lg shadow-lg max-w-md mx-auto mt-10 mb-6">
       <h1 className="text-2xl font-bold text-gray-800 mb-3">
         {userInfo.username}님, 반가워요!
       </h1>
       <p>
-        <strong>{userInfo.username}</strong>님은 저희의 소중한{' '}
+        {/* <strong>{userInfo.username}</strong>님의 계정은 {' '} */}
         <strong>
           {userTypeToKor(userInfo.user_type as 'fan' | 'influencer' | 'admin')}
         </strong>
-        입니다.
+        {' '}계정입니다.
       </p>
       <div className="space-y-2">
         <p className="my-4">{userInfo.email}</p>
