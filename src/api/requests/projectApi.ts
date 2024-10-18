@@ -15,7 +15,7 @@ export const projectApi = async () => {
 };
 
 export const myProjectApi = async (userId: string) => {
-  const URL = `${baseDirectory}my`; // baseDirectory 뒤에 슬래시 추가
+  const URL = `${baseDirectory}my`;
 
   try {
     const res = await axios.get(URL, {
