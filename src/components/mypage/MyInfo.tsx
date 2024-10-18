@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { userInfoApi, userModifyApi } from "../../api/requests/userApi";
 import { useNavigate } from "react-router-dom";
-import { formatDate } from "../../util/projectUtils";
 import UserInfoForm from "./UserInfoForm";
 import Modal from "./Modal";
+import { formatDate } from "../../util/projectUtils";
 
 interface UserInfo {
   user_id: number;
@@ -32,29 +32,6 @@ const MyInfo = () => {
       })
       .catch(console.error);
   }, [userId]);
-
-  // const userInfo = {
-  //   user_id: 3,
-  //   username: '까미',
-  //   email: 'dog@bow.wow',
-  //   password: 1234,
-  //   user_type: 'fan',
-  //   created_at: '2024-10-11 15:10:01',
-  // };
-
-  const userTypeToKor = (userType: "fan" | "influencer" | "admin") => {
-    const types = { fan: "팬", influencer: "인플루언서", admin: "관리자" };
-
-    return types[userType];
-  };
-
-  const formatDate = (dateString: string) => {
-    const date = new Date(dateString);
-    const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, "0"); // 월은 0부터 시작하므로 1을 더함
-    const day = String(date.getDate()).padStart(2, "0"); // 일자가 한 자리일 때 앞에 0을 붙임
-    return `${year}-${month}-${day}`;
-  };
 
   if (!userInfo) {
     return <div>Loading...</div>; // userInfo가 null일 경우 로딩 표시

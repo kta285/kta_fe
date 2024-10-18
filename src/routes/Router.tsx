@@ -12,6 +12,7 @@ import Signup from '../page/Signup';
 import Modify from '../page/Modify';
 import Login from '../page/Login';
 import ProtectedRoute from './ProtectedRoute';
+import FundingList from '../components/mypage/FundingList';
 
 export const routes = [
   {
@@ -31,7 +32,7 @@ export const routes = [
         children: [
           { path: '', element: <MyList />, index: true },
           { path: 'my', element: <MyList /> },
-          { path: 'funding', element: <MyList /> },
+          { path: 'funding', element: <FundingList /> },
           { path: 'inquiry', element: <InquiryList /> },
         ],
       },

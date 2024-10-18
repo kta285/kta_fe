@@ -15,6 +15,7 @@ interface detailProps {
   isData: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
+
 const DetailHead = ({ data, percentage, isData }: detailProps) => {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -33,6 +34,7 @@ const DetailHead = ({ data, percentage, isData }: detailProps) => {
   };
   const dDay = calculateDaysLeft(data.end_date);
   const goalAmount = formatAmount(data.goal_amount);
+  const currentAmount = formatAmount(String(data.current_amount));
   const deleteProject = async () => {
     try {
       const res = await projectDeleteApi(Number(id));
@@ -104,8 +106,11 @@ const DetailHead = ({ data, percentage, isData }: detailProps) => {
             <p className='text-h1 font-bold'>{data.title}</p>
           </div>
           <div className='text-start mt-[20px]'>
-            <p className='text-h2 font-medium'>
+            <p className='text-h3 font-medium'>
               목표금액: {goalAmount}원
+            </p>
+            <p className='text-h2 font-medium'>
+            달성금액: {currentAmount}원
               <span className='bg-[#062E54] text-[#ffffff] text-h4 mx-[3px]  px-[8px] rounded-lg relative bottom-[2px]'>
                 {percentage}%
               </span>
