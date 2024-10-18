@@ -1,9 +1,9 @@
-import React, { useEffect, useRef, useState } from 'react';
-import CustomEditor from './CustomEditor';
-import { projectPutApi, projectWriteApi } from '../../api/requests/projectApi';
-import { useNavigate } from 'react-router-dom';
-import CustomDatePicker from '../common/datePicker';
-import { DetailProps } from '../../types/project';
+import React, { useEffect, useRef, useState } from "react";
+import CustomEditor from "./CustomEditor";
+import { projectPutApi, projectWriteApi } from "../../api/requests/projectApi";
+import { useNavigate } from "react-router-dom";
+import CustomDatePicker from "../common/datePicker";
+import { DetailProps } from "../../types/project";
 
 const WriteForm = ({
   type,
@@ -15,12 +15,18 @@ const WriteForm = ({
   const title = useRef<HTMLInputElement>(null);
   const navigate = useNavigate();
   const targetAmount = useRef<HTMLInputElement>(null);
-  const [category, setCategory] = useState('');
+  const [category, setCategory] = useState("");
   // eslint-disable-next-line
-  const [content, setContent] = useState('');
+  const [content, setContent] = useState("");
   const [endDate, setEndDate] = useState(new Date());
-  const [thumbnail, setThumbnail] = useState<string>(''); // Base64로 저장
+  const [thumbnail, setThumbnail] = useState<string>(""); // Base64로 저장
   const [thumbnailPreview, setThumbnailPreview] = useState<string | null>(null);
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+
+  useEffect(() => {
+    const user_id = sessionStorage.getItem("user_id");
+    setIsLoggedIn(user_id ? true : false); // 토큰이 있으면 로그인 상태 true
+  }, []);
 
   const handleCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setCategory(e.target.value);
@@ -50,8 +56,8 @@ const WriteForm = ({
   const createSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const body = {
-      title: title.current?.value || '',
-      amount: targetAmount.current?.value || '',
+      title: title.current?.value || "",
+      amount: targetAmount.current?.value || "",
       category: category,
       content: content,
       startDate: new Date(),
@@ -61,10 +67,10 @@ const WriteForm = ({
     try {
       const res = await projectWriteApi({ body: body });
       if (Array.isArray(res)) {
-        console.error('API 요청 중 에러가 발생했습니다.');
+        console.error("API 요청 중 에러가 발생했습니다.");
       } else if (res.status === 200) {
         console.log(res.data.message);
-        navigate('/projects');
+        navigate("/projects");
       }
     } catch (err) {
       console.log(err);
@@ -74,20 +80,20 @@ const WriteForm = ({
   const modifySubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const body = {
-      title: title.current?.value || '',
-      amount: targetAmount.current?.value || '',
+      title: title.current?.value || "",
+      amount: targetAmount.current?.value || "",
       category: category,
       content: content,
       startDate: detail?.start_date ? new Date(detail.start_date) : new Date(),
       endDate: endDate,
       titleImg:
-        detail?.title_img && thumbnail === '' ? detail?.title_img : thumbnail,
+        detail?.title_img && thumbnail === "" ? detail?.title_img : thumbnail,
       id: detail?.project_id,
     };
     try {
       const res = await projectPutApi({ body: body });
       if (Array.isArray(res)) {
-        console.error('API 요청 중 에러가 발생했습니다.');
+        console.error("API 요청 중 에러가 발생했습니다.");
       } else if (res.status === 200) {
         console.log(res.data.message);
         navigate(`/projects/detail/${detail?.project_id}`);
@@ -96,101 +102,104 @@ const WriteForm = ({
       console.log(err);
     }
   };
+  if (!isLoggedIn) {
+    return <div>로그인이 필요합니다.</div>; // 로그인되지 않은 경우 메시지 표시
+  }
   return (
-    <div className='w-[70%] mx-auto min-h-[650px] p-6'>
+    <div className="w-[70%] mx-auto min-h-[650px] p-6">
       <form
-        className='bg-white rounded-lg shadow-md p-8 space-y-6'
+        className="bg-white rounded-lg shadow-md p-8 space-y-6"
         onSubmit={(e) =>
-          type === 'modify' ? modifySubmit(e) : createSubmit(e)
+          type === "modify" ? modifySubmit(e) : createSubmit(e)
         }
       >
-        <h2 className='text-2xl font-bold text-gray-800 text-center mb-4'>
+        <h2 className="text-2xl font-bold text-gray-800 text-center mb-4">
           프로젝트 작성
         </h2>
 
-        <div className='w-full'>
+        <div className="w-full">
           <label
-            htmlFor='title'
-            className='block text-sm font-medium text-gray-700 mb-1'
+            htmlFor="title"
+            className="block text-sm font-medium text-gray-700 mb-1"
           >
             제목
           </label>
           <input
-            type='text'
+            type="text"
             ref={title}
-            className='border border-gray-300 rounded-md p-3  w-[80%]  focus:outline-none focus:ring-2 focus:ring-blue-400'
-            placeholder='제목을 입력하세요'
+            className="border border-gray-300 rounded-md p-3  w-[80%]  focus:outline-none focus:ring-2 focus:ring-blue-400"
+            placeholder="제목을 입력하세요"
             defaultValue={detail && detail.title}
           />
         </div>
 
-        <div className='w-full'>
+        <div className="w-full">
           <label
-            htmlFor='thumbnail'
-            className='block text-sm font-medium text-gray-700 mb-1'
+            htmlFor="thumbnail"
+            className="block text-sm font-medium text-gray-700 mb-1"
           >
             썸네일 이미지
           </label>
           {thumbnailPreview && (
-            <div className='w-full flex justify-center mb-4'>
+            <div className="w-full flex justify-center mb-4">
               <img
                 src={thumbnailPreview}
-                alt='Thumbnail Preview'
-                className='mt-3 w-[200px] h-[200px] object-cover rounded-md'
+                alt="Thumbnail Preview"
+                className="mt-3 w-[200px] h-[200px] object-cover rounded-md"
               />
             </div>
           )}
           <input
-            type='file'
-            id='thumbnail'
-            accept='image/*'
+            type="file"
+            id="thumbnail"
+            accept="image/*"
             onChange={handleThumbnailChange}
-            className='border border-gray-300 rounded-md p-3 w-[80%] focus:outline-none focus:ring-2 focus:ring-blue-400'
+            className="border border-gray-300 rounded-md p-3 w-[80%] focus:outline-none focus:ring-2 focus:ring-blue-400"
           />
         </div>
 
-        <div className='w-full'>
+        <div className="w-full">
           <label
-            htmlFor='targetAmount'
-            className='block text-sm font-medium text-gray-700 mb-1'
+            htmlFor="targetAmount"
+            className="block text-sm font-medium text-gray-700 mb-1"
           >
             목표금액
           </label>
           <input
-            type='text'
+            type="text"
             ref={targetAmount}
-            className='border border-gray-300 rounded-md p-3  w-[80%]  focus:outline-none focus:ring-2 focus:ring-blue-400'
-            placeholder='목표금액을 입력하세요'
-            readOnly={type === 'modify' && true}
+            className="border border-gray-300 rounded-md p-3  w-[80%]  focus:outline-none focus:ring-2 focus:ring-blue-400"
+            placeholder="목표금액을 입력하세요"
+            readOnly={type === "modify" && true}
             defaultValue={detail && detail.goal_amount}
           />
         </div>
 
-        <div className='w-full'>
+        <div className="w-full">
           <label
-            htmlFor='category'
-            className='block text-sm font-medium text-gray-700 mb-1'
+            htmlFor="category"
+            className="block text-sm font-medium text-gray-700 mb-1"
           >
             카테고리
           </label>
           <select
-            id='category'
+            id="category"
             value={category}
             onChange={handleCategoryChange}
-            className='border border-gray-300 rounded-md p-3 w-[80%] focus:outline-none focus:ring-2 focus:ring-blue-400'
+            className="border border-gray-300 rounded-md p-3 w-[80%] focus:outline-none focus:ring-2 focus:ring-blue-400"
           >
-            <option value=''>카테고리를 선택하세요</option>
-            <option value='goods'>굿즈</option>
-            <option value='event'>이벤트</option>
-            <option value='promotion'>프로모션</option>
-            <option value='etc'>기타</option>
+            <option value="">카테고리를 선택하세요</option>
+            <option value="goods">굿즈</option>
+            <option value="event">이벤트</option>
+            <option value="promotion">프로모션</option>
+            <option value="etc">기타</option>
           </select>
         </div>
 
-        <div className='w-full mx-auto'>
+        <div className="w-full mx-auto">
           <label
-            htmlFor='endDate'
-            className='block text-sm font-medium text-gray-700 mb-1'
+            htmlFor="endDate"
+            className="block text-sm font-medium text-gray-700 mb-1"
           >
             마감일
           </label>
@@ -205,10 +214,10 @@ const WriteForm = ({
           content={content}
           setContent={setContent}
         />
-        <div className='text-center'>
+        <div className="text-center">
           <button
-            type='submit'
-            className='bg-blue-500 text-white font-semibold px-6 py-2 rounded-md hover:bg-blue-600 transition duration-200'
+            type="submit"
+            className="bg-blue-500 text-white font-semibold px-6 py-2 rounded-md hover:bg-blue-600 transition duration-200"
           >
             제출하기
           </button>

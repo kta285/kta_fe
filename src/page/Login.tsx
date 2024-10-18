@@ -29,6 +29,7 @@ const Login = () => {
       console.log(response);
       alert("로그인 성공!");
       navigate("/");
+      window.location.reload();
     } catch (error) {
       console.error("로그인 중 오류 발생", error);
     }
