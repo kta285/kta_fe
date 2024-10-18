@@ -1,9 +1,14 @@
-import { ProjectDetail } from '../../types/project';
+import { DetailProps } from '../../types/project';
 import { calculatePercentage } from '../../util/calculatePercentage';
 import ProgressBar from '../common/ProgressBar';
 import DetailHead from './DetailHead';
 
-const Detail = ({ data }: ProjectDetail) => {
+type props = {
+  isData: React.Dispatch<React.SetStateAction<boolean>>;
+  data: DetailProps;
+};
+
+const Detail = ({ data, isData }: props) => {
   const percentage = calculatePercentage(
     Number(data && data.goal_amount),
     data && data.current_amount
@@ -11,7 +16,9 @@ const Detail = ({ data }: ProjectDetail) => {
 
   return (
     <div className='min-h-[600px] w-full'>
-      {data && <DetailHead data={data} percentage={percentage} />}
+      {data && (
+        <DetailHead data={data} isData={isData} percentage={percentage} />
+      )}
 
       <div className='flex  w-[70%] mx-auto min-h-[500px] justify-between'>
         <div className='w-[63%]   min-h-[500px] h-auto'>

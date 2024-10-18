@@ -84,3 +84,15 @@ export const projectDeleteApi = async (
     return null; // 에러 시 로고 반환
   }
 };
+
+export const projectSupportApi = async (
+  id: number
+): Promise<AxiosResponse | null> => {
+  try {
+    const res = await axios.post(baseDirectory + `support/${id}`);
+    return res; // 정상적인 응답 반환
+  } catch (error) {
+    console.error('Error :', error);
+    return null; // 에러 시 로고 반환
+  }
+};
