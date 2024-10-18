@@ -14,3 +14,15 @@ export const userInfoApi = async (userId: string) => {
         return []; // 에러 시 빈 배열 반환
     }
 };
+
+// userModifyApi 수정
+export const userModifyApi =
+    async (body: { userId: string; username: string; currentPassword: string; password?: string }) => {
+        try {
+            const res = await axios.post(baseDirectory + '/modify', body);
+            return res;
+        } catch (error: any) {
+            console.error('Error :', error);
+            throw new Error(error.response?.data?.message || '사용자 정보 수정 중 오류가 발생했습니다.');
+        }
+    };

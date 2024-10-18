@@ -13,7 +13,6 @@ const Header = () => {
       setIsLoggedIn(!!user_id);
     };
     checkLoginStatus();
-    
   });
 
   return (

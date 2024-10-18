@@ -1,6 +1,9 @@
 import { useEffect, useState } from "react";
-import { userInfoApi } from "../../api/requests/userApi";
+import { userInfoApi, userModifyApi } from "../../api/requests/userApi";
 import { useNavigate } from "react-router-dom";
+import { formatDate } from "../../util/projectUtils";
+import UserInfoForm from "./UserInfoForm";
+import Modal from "./Modal";
 
 interface UserInfo {
   user_id: number;
@@ -14,15 +17,18 @@ interface UserInfo {
 const MyInfo = () => {
   const navigate = useNavigate();
   const userId = sessionStorage.getItem("user_id") || "3";
-  console.log(userId);
-
   const [userInfo, setUserInfo] = useState<UserInfo | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [username, setUsername] = useState<string>("");
+  const [currentPassword, setCurrentPassword] = useState<string>("");
+  const [newPassword, setNewPassword] = useState<string>("");
+  const [isPasswordChange, setIsPasswordChange] = useState<boolean>(false);
 
   useEffect(() => {
     userInfoApi(userId)
       .then((data) => {
         setUserInfo(data);
-        console.log(data);
+        setUsername(data.username);
       })
       .catch(console.error);
   }, [userId]);
@@ -57,7 +63,39 @@ const MyInfo = () => {
   const handleLogout = () => {
     sessionStorage.removeItem("user_id");
     navigate("/");
+    window.location.reload();
   };
+
+  const toggleModal = () => {
+    setCurrentPassword("");
+    setNewPassword("");
+    setIsPasswordChange(false);
+    setIsModalOpen((prev) => !prev);
+  };
+
+  const handleUserInfoSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (!currentPassword) {
+      alert("기존 비밀번호를 입력해주세요.");
+      return;
+    }
+
+    const modifyData = isPasswordChange
+      ? { userId, username, password: newPassword, currentPassword }
+      : { userId, username, currentPassword };
+
+    try {
+      await userModifyApi(modifyData);
+      alert("회원 정보가 성공적으로 수정되었습니다.");
+      toggleModal();
+      const updatedUserInfo = await userInfoApi(userId);
+      setUserInfo(updatedUserInfo);
+    } catch (error: any) {
+      alert(error.message);
+    }
+  };
+
+  if (!userInfo) return <div>Loading...</div>;
 
   return (
     <div className="bg-gray-100 p-6 rounded-lg shadow-lg max-w-md mx-auto mt-10 mb-6">
@@ -65,9 +103,12 @@ const MyInfo = () => {
         {userInfo.username}님, 반가워요!
       </h1>
       <p>
-        {/* <strong>{userInfo.username}</strong>님의 계정은 {' '} */}
         <strong>
-          {userTypeToKor(userInfo.user_type as "fan" | "influencer" | "admin")}
+          {userInfo.user_type === "fan"
+            ? "팬"
+            : userInfo.user_type === "influencer"
+              ? "인플루언서"
+              : "관리자"}
         </strong>{" "}
         계정입니다.
       </p>
@@ -79,7 +120,10 @@ const MyInfo = () => {
         </p>
       </div>
       <div className="space-y-4 mt-3">
-        <button className="bg-blue-500 text-white px-4 py-2 mx-2 rounded hover:bg-blue-600 transition duration-300">
+        <button
+          className="bg-blue-500 text-white px-4 py-2 mx-2 rounded hover:bg-blue-600 transition duration-300"
+          onClick={toggleModal}
+        >
           회원정보 수정
         </button>
         <button
@@ -89,6 +133,20 @@ const MyInfo = () => {
           로그아웃
         </button>
       </div>
+
+      <Modal isOpen={isModalOpen} toggleModal={toggleModal}>
+        <UserInfoForm
+          username={username}
+          setUsername={setUsername}
+          currentPassword={currentPassword}
+          setCurrentPassword={setCurrentPassword}
+          newPassword={newPassword}
+          setNewPassword={setNewPassword}
+          isPasswordChange={isPasswordChange}
+          setIsPasswordChange={setIsPasswordChange}
+          handleSubmit={handleUserInfoSubmit}
+        />
+      </Modal>
     </div>
   );
 };

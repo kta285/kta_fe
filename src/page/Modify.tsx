@@ -10,14 +10,14 @@ const Modify = () => {
   useEffect(() => {
     const fetchData = async () => {
       const data = await projectDetailApi(id as string); // 이미지 데이터 가져오기
-      setDetail(data[0]); // 상태 업데이트
+      setDetail(data); // 상태 업데이트
     };
     fetchData();
   }, [id]);
 
   return (
     <div>
-      <WriteForm detail={detail} type={'modify'} />
+      <WriteForm detail={detail[0]} type={'modify'} />
     </div>
   );
 };

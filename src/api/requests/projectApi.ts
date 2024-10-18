@@ -6,7 +6,7 @@ const baseDirectory = '/project/';
 
 export const projectApi = async () => {
   try {
-    const res = await axios.get(baseDirectory + "all"); // 프로젝트 데이터를 가져옴
+    const res = await axios.get(baseDirectory + 'all'); // 프로젝트 데이터를 가져옴
     return res; // Project[] 반환
   } catch (error) {
     console.error('Error fetching data:', error); // 오류 처리
@@ -15,11 +15,11 @@ export const projectApi = async () => {
 };
 
 export const myProjectApi = async (userId: string) => {
-  const URL = baseDirectory + "my";
+  const URL = baseDirectory + 'my';
 
   try {
     const res = await axios.get(URL, {
-      headers: { 'user_id': userId }
+      headers: { user_id: userId },
     });
 
     return res.data; // 데이터 반환
@@ -28,7 +28,6 @@ export const myProjectApi = async (userId: string) => {
     return []; // 에러 시 빈 배열 반환
   }
 };
-
 
 export const projectWriteApi = async ({
   body,
