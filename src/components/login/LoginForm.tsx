@@ -63,7 +63,7 @@ const LoginForm = ({
           </form>
           <div className="mt-4 text-center">
             <p className="text-sm text-gray-600">
-              회원이 아니신가요?{" "}
+              회원이 아니신가요?
               <Link to="/signup" className="text-blue-600 hover:underline">
                 회원가입
               </Link>

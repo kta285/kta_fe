@@ -4,10 +4,17 @@ import { Link } from "react-router-dom";
 const Header = () => {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
 
+  // user_id가 있음 : 로그인 상태
+  // user_id가 없음 : 로그아웃 상태
+  // user_id의 존재 여부에 따라 상태가 바뀜
   useEffect(() => {
-    const user_id = sessionStorage.getItem("user_id");
-    setIsLoggedIn(!!user_id);
-  }, []);
+    const checkLoginStatus = () => {
+      const user_id = sessionStorage.getItem("user_id");
+      setIsLoggedIn(!!user_id);
+    };
+    checkLoginStatus();
+    
+  });
 
   return (
     <nav className="flex w-[100%] m-auto border-b h-[80px]">
