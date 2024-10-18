@@ -17,11 +17,10 @@ interface detailProps {
 
 const DetailHead = ({ data, percentage, isData }: detailProps) => {
   const { id } = useParams();
-  const sessionUser = sessionStorage.getItem('user_id') ?? null;
-  console.log(sessionUser);
-
   const navigate = useNavigate();
-  const isProjectUserId = data.created_by.toString() ?? '-1';
+  const sessionUser = sessionStorage.getItem('user_id') ?? null;
+
+  const isProjectUserId = data.created_by ? data.created_by.toString() : '-1';
   const handleCopy = async () => {
     const url = window.location.href; // 현재 페이지의 URL을 가져옴
     try {
