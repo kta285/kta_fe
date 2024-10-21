@@ -15,7 +15,6 @@ interface detailProps {
   isData: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-
 const DetailHead = ({ data, percentage, isData }: detailProps) => {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -40,7 +39,6 @@ const DetailHead = ({ data, percentage, isData }: detailProps) => {
       const res = await projectDeleteApi(Number(id));
       if (res && res.status === 200) {
         // res가 null이 아닌 경우에만 실행
-
         navigate('/projects');
       } else {
         // res가 null인 경우 처리
@@ -73,7 +71,7 @@ const DetailHead = ({ data, percentage, isData }: detailProps) => {
   };
 
   return (
-    <div className='w-full bg-[#fcfcfc] h-[400px] pt-3'>
+    <div className='w-full bg-[#dae5e4] h-[400px] pt-3'>
       <div className='w-[70%]  mx-auto h-[350px] flex'>
         <div className='w-[50%] h-[200px] p-[20px] '>
           <div className=' w-full h-[350px] mx-auto rounded-md px-[20px]'>
@@ -106,11 +104,9 @@ const DetailHead = ({ data, percentage, isData }: detailProps) => {
             <p className='text-h1 font-bold'>{data.title}</p>
           </div>
           <div className='text-start mt-[20px]'>
-            <p className='text-h3 font-medium'>
-              목표금액: {goalAmount}원
-            </p>
+            <p className='text-h3 font-medium'>목표금액: {goalAmount}원</p>
             <p className='text-h2 font-medium'>
-            달성금액: {currentAmount}원
+              달성금액: {currentAmount}원
               <span className='bg-[#062E54] text-[#ffffff] text-h4 mx-[3px]  px-[8px] rounded-lg relative bottom-[2px]'>
                 {percentage}%
               </span>
