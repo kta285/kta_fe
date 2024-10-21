@@ -4,6 +4,8 @@ import { projectPutApi, projectWriteApi } from '../../api/requests/projectApi';
 import { useNavigate } from 'react-router-dom';
 import CustomDatePicker from '../common/datePicker';
 import { DetailProps } from '../../types/project';
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage'; // Firebase 관련 import 추가
+import { storage } from '../../config/firebaseConfig'; // Firebase 설정 파일 import
 
 const WriteForm = ({
   type,
@@ -16,20 +18,19 @@ const WriteForm = ({
   const navigate = useNavigate();
   const targetAmount = useRef<HTMLInputElement>(null);
   const [category, setCategory] = useState('');
-  // eslint-disable-next-line
   const [content, setContent] = useState('');
   const [endDate, setEndDate] = useState(new Date());
-  const [thumbnail, setThumbnail] = useState<string>(''); // Base64로 저장
+  const [thumbnail, setThumbnail] = useState<File | null>(null); // File 형식으로 변경
   const [thumbnailPreview, setThumbnailPreview] = useState<string | null>(null);
   const user_id = sessionStorage.getItem('user_id');
 
   const handleCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setCategory(e.target.value);
   };
-  // detail 데이터가 있으면 카테고리 초기값 설정
+
   useEffect(() => {
     if (detail && detail.type) {
-      setCategory(detail.type); // 카테고리 초기값 설정
+      setCategory(detail.type);
     }
     if (detail && detail.title_img) {
       setThumbnailPreview(detail.title_img);
@@ -39,17 +40,21 @@ const WriteForm = ({
   const handleThumbnailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files ? e.target.files[0] : null;
     if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setThumbnail(reader.result as string); // Base64 데이터 저장
-        setThumbnailPreview(URL.createObjectURL(file)); // 미리보기용 URL 생성
-      };
-      reader.readAsDataURL(file); // 파일을 base64로 읽음
+      setThumbnail(file);
+      setThumbnailPreview(URL.createObjectURL(file)); // 미리보기용 URL 생성
     }
+  };
+
+  const uploadThumbnailToFirebase = async () => {
+    if (!thumbnail) return '';
+    const storageRef = ref(storage, `thumbnails/${thumbnail.name}`);
+    await uploadBytes(storageRef, thumbnail);
+    return await getDownloadURL(storageRef); // Firebase에서 이미지 URL 가져오기
   };
 
   const createSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    const uploadedThumbnailUrl = await uploadThumbnailToFirebase(); // Firebase에 이미지 업로드
     const body = {
       title: title.current?.value || '',
       amount: targetAmount.current?.value || '',
@@ -57,7 +62,7 @@ const WriteForm = ({
       content: content,
       startDate: new Date(),
       endDate: endDate,
-      titleImg: thumbnail, // Base64로 변환된 썸네일 데이터
+      titleImg: uploadedThumbnailUrl, // Firebase에서 받아온 URL 저장
       createdId: user_id,
     };
     try {
@@ -75,18 +80,20 @@ const WriteForm = ({
 
   const modifySubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const body = {
-      title: title.current?.value || '',
-      amount: targetAmount.current?.value || '',
-      category: category,
-      content: content,
-      startDate: detail?.start_date ? new Date(detail.start_date) : new Date(),
-      endDate: endDate,
-      created_by: detail?.created_by,
-      titleImg:
-        detail?.title_img && thumbnail === '' ? detail?.title_img : thumbnail,
-      id: detail?.project_id,
-    };
+    const uploadedThumbnailUrl = thumbnail
+      ? await uploadThumbnailToFirebase() // 새로운 썸네일이 있으면 Firebase에 업로드
+      : detail?.title_img; // 기존 썸네일을 유지
+      const body = {
+        title: title.current?.value || '',
+        amount: targetAmount.current?.value || '',
+        category: category,
+        content: content,
+        startDate: detail?.start_date ? new Date(detail.start_date) : new Date(),
+        endDate: endDate,
+        created_by: detail?.created_by,
+        titleImg: uploadedThumbnailUrl || '', // undefined 대신 빈 문자열 할당
+        id: detail?.project_id,
+      };
     try {
       const res = await projectPutApi({ body: body });
       if (Array.isArray(res)) {

@@ -38,7 +38,7 @@ const MyProjectItem: React.FC<ProjectItemProps> = ({ project }) => {
                 <div className='flex-shrink-0 mr-6'>
                     {/* <h2 className='text-md font-bold text-center'>{project.created_by}</h2> */}
                     <img
-                        src={project.title_img}
+                        src={project.title_img || "https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn4.iconfinder.com%2Fdata%2Ficons%2Fsolid-part-6%2F128%2Fimage_icon-512.png&type=sc960_832"}
                         alt={project.title}
                         className='object-cover'
                         style={{ width: '150px', height: '150px' }}
