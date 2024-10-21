@@ -3,7 +3,8 @@ import { inquiryApi } from '../../api/requests/inquiryApi';
 
 interface Inquiry {
   title: string;
-  content: string;
+  user_id: string;
+  inquiry_content: string;
   date: string;
   reply?: string;
 }
@@ -50,16 +51,21 @@ function InquiryList() {
     sessionStorage.setItem("inquiries", JSON.stringify(updatedInquiries));
   };
 
+  // console.log(inquiries)
+
+  const userId = sessionStorage.getItem("user_id")
+  console.log("user:"+userId)
+
   return (
     <div className="space-y-6">
       <h2 className="text-2xl font-bold text-center text-gray-800 mb-6">
         문의 목록
       </h2>
-      {inquiries.map((inquiry, index) => (
-        
+      {inquiries.filter(inquiry=>inquiry.user_id==userId)
+      .map((inquiry, index) => (
         <div key={index} className="bg-white rounded-lg shadow-md p-6 space-y-4">
           <h3 className="text-xl font-semibold text-gray-800">{index + 1}. {inquiry.title}</h3>
-          <p className="text-gray-600">{inquiry.content}</p>
+          <p className="text-gray-600">{inquiry.inquiry_content}</p>
           {/* <small className="text-gray-500 block">{new Date(inquiry.date).toLocaleString()}</small> */}
           
           {inquiry.reply ? (
@@ -87,7 +93,8 @@ function InquiryList() {
               </div>
             </div>
           ) : (
-            <button
+            <button style={{display:"none"}}
+            // <button
               onClick={() =>
                 addReply(index, prompt("답변을 입력하세요:") || "")
               }

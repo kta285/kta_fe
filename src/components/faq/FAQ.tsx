@@ -16,9 +16,9 @@ function FAQ({ question, answer }: FAQProps) {
         onClick={() => setIsOpen(!isOpen)}
       >
         <h3 className="text-lg font-semibold text-gray-700">{question}</h3>
-        {/* {isOpen ? <FaChevronUp className="text-gray-600" /> : <FaChevronDown className="text-gray-600" />} */}
+        {isOpen ? <FaChevronUp className="text-gray-600" /> : <FaChevronDown className="text-gray-600" />}
       </div>
-      {/* {isOpen && <div className="p-4 bg-white border-t border-gray-200">{answer}</div>} */}
+      {isOpen && <div className="p-4 bg-white border-t border-gray-200">{answer}</div>}
     </div>
   );
 }
