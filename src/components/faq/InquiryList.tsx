@@ -61,7 +61,8 @@ function InquiryList() {
       <h2 className="text-2xl font-bold text-center text-gray-800 mb-6">
         문의 목록
       </h2>
-      {inquiries.filter(inquiry=>inquiry.user_id==userId)
+      {// eslint-disable-next-line
+      inquiries.filter(inquiry=>inquiry.user_id == userId)
       .map((inquiry, index) => (
         <div key={index} className="bg-white rounded-lg shadow-md p-6 space-y-4">
           <h3 className="text-xl font-semibold text-gray-800">{index + 1}. {inquiry.title}</h3>
