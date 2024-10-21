@@ -26,7 +26,8 @@ export const routes = [
       { path: "/projects/:type", element: <Projects /> },
       { path: "/projects/detail/:id", element: <ProjectDetail /> },
       { path: "/write", element: <Write /> },
-      { path: "inquiries", element: <InquiryList /> },
+      { path: "/modify/:id", element: <Modify /> },
+      // { path: "inquiries", element: <InquiryList /> },
       {
         path: '/mypage',
         element: <MyPage />,

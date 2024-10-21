@@ -74,7 +74,7 @@ function Faq() {
             >
               X
             </button>
-            <InquiryForm  sessionUser={sessionUser}/> {/* InquiryForm이 모달 안에 표시됨 */}
+            <InquiryForm  IsModalOpen={setIsModalOpen} sessionUser={sessionUser}/> {/* InquiryForm이 모달 안에 표시됨 */}
           </div>
         </div>
       )}

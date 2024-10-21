@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
 import { inquiryApi } from '../../api/requests/inquiryApi';
 
 interface Inquiry {
@@ -29,19 +28,6 @@ function InquiryList() {
     }).catch(console.error);
   }, []);
 
-  // 서버에서 데이터를 가져오는 함수
-  const fetchInquiries = async () => {
-    try {
-      const response = await axios.get('/inquiries/all');  // 서버 API 호출
-      setInquiries(response.data);  // 응답 데이터를 상태로 설정
-    } catch (error) {
-      console.error('문의 목록을 가져오는 중 오류 발생:', error);
-    }
-  };
-
-  useEffect(() => {
-    fetchInquiries();  // 컴포넌트가 마운트될 때 서버에서 데이터를 가져옴
-  }, []);
 
   const addReply = (index: number, reply: string) => {
     const updatedInquiries = [...inquiries];

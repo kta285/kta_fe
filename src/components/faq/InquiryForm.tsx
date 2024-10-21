@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import axios from "axios";
-import { useNavigate } from "react-router-dom";
 
-function InquiryForm({sessionUser}:{sessionUser:string | null}) {
+import { useNavigate } from "react-router-dom";
+import { inquirySubmitApi } from "../../api/requests/inquiryApi";
+// 
+function InquiryForm({sessionUser,IsModalOpen}:{sessionUser:string | null,IsModalOpen:React.Dispatch<React.SetStateAction<boolean>>}) {
   const [title, setTitle] = useState<string>("");
   const [content, setContent] = useState<string>("");
   const navigate = useNavigate();
@@ -11,17 +12,14 @@ function InquiryForm({sessionUser}:{sessionUser:string | null}) {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      await axios.post("http://localhost:3333/inquiries/submit", {
-        title,
-        content,
-        user_id : sessionUser,
-        });
+      await inquirySubmitApi({title,content,user_id:sessionUser}); // 프로젝트 데이터를 가져옴
       alert("문의가 성공적으로 접수되었습니다.");
-      navigate("/inquiries");
+      IsModalOpen(false)
+      navigate('/mypage/inquiry')
     } catch (error) {
       console.error("문의 제출 중 오류 발생:", error);
-      alert("문의 제출 중 오류가 발생했습니다. 다시 시도해 주세요.");
     }
+ 
   };
   return (
     <div className="bg-white rounded-lg shadow-md p-6">
