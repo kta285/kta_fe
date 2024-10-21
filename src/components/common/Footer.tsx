@@ -8,9 +8,9 @@ type FooterType = {
 
 const Footer = () => {
   const footer: FooterType = [
-    { name: '회사소개', linkTo: '', id: 1 },
+    { name: '회사소개', linkTo: '/company', id: 1 },
     { name: '문의하기', linkTo: '', id: 2 },
-    { name: '이용약관', linkTo: '', id: 3 },
+    { name: '이용약관', linkTo: '/terms', id: 3 },
   ];
 
   return (

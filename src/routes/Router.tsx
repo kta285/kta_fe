@@ -13,6 +13,8 @@ import Modify from '../page/Modify';
 import Login from '../page/Login';
 import ProtectedRoute from './ProtectedRoute';
 import FundingList from '../components/mypage/FundingList';
+import Terms from '../page/Terms';
+import Company from '../page/Company';
 
 export const routes = [
   {
@@ -41,6 +43,8 @@ export const routes = [
         element: <ProtectedRoute children={<Write />} />,
       },
       { path: '/faq', element: <Faq /> },
+      { path: '/company', element: <Company /> },
+      { path: '/terms', element: <Terms /> },
       { path: '*', element: <NotFound /> },
     ],
   },

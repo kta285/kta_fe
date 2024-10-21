@@ -12,6 +12,7 @@ interface UserInfo {
   password: string;
   user_type: "fan" | "influencer" | "admin";
   created_at: string;
+  funding: string;
 }
 
 const MyInfo = () => {
@@ -95,6 +96,7 @@ const MyInfo = () => {
           있어요.
         </p>
       </div>
+      총 펀딩 횟수: <strong>{userInfo.funding.split(",").length}</strong>
       <div className="space-y-4 mt-3">
         <button
           className="bg-blue-500 text-white px-4 py-2 mx-2 rounded hover:bg-blue-600 transition duration-300"
