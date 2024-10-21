@@ -21,7 +21,7 @@ const ProjectCard: React.FC<ProjectProps> = ({ project }) => {
         <img
           className="w-full h-full object-cover rounded-t"
           // src="https://i.namu.wiki/i/oU0avPQmlPv0p13BPnuEqyzmtGl9SoTArdKVYpb1r5CYXrpUjEqtiurvlFDjpXdOMyDXwIFYpz0x3PgtS92_8A.webp"
-          src={project.title_img}
+          src={project.title_img || "https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn4.iconfinder.com%2Fdata%2Ficons%2Fsolid-part-6%2F128%2Fimage_icon-512.png&type=sc960_832"}
           alt={project.title}
         />
       </div>
