@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react';
+import { inquiryApi } from '../../api/requests/inquiryApi';
 
 interface Inquiry {
   title: string;
@@ -10,12 +11,23 @@ interface Inquiry {
 function InquiryList() {
   const [inquiries, setInquiries] = useState<Inquiry[]>([]);
 
+  const getInquiries = async () => {
+    try {
+      const data = await inquiryApi(); // 프로젝트 데이터를 가져옴
+      return data; // Project[] 반환
+    } catch (error) {
+      console.error('Error fetching data:', error); // 오류 처리
+      return []; // 에러가 발생할 경우 빈 배열 반환
+    }
+  };
+
   useEffect(() => {
-    const storedInquiries: Inquiry[] = JSON.parse(
-      sessionStorage.getItem("inquiries") || "[]",
-    );
-    setInquiries(storedInquiries);
+    getInquiries().then((data)=>{
+      console.log(data);
+      setInquiries(data)
+    }).catch(console.error);
   }, []);
+
 
   const addReply = (index: number, reply: string) => {
     const updatedInquiries = [...inquiries];
@@ -44,18 +56,12 @@ function InquiryList() {
         문의 목록
       </h2>
       {inquiries.map((inquiry, index) => (
-        <div
-          key={index}
-          className="bg-white rounded-lg shadow-md p-6 space-y-4"
-        >
-          <h3 className="text-xl font-semibold text-gray-800">
-            {index + 1}. {inquiry.title}
-          </h3>
+        
+        <div key={index} className="bg-white rounded-lg shadow-md p-6 space-y-4">
+          <h3 className="text-xl font-semibold text-gray-800">{index + 1}. {inquiry.title}</h3>
           <p className="text-gray-600">{inquiry.content}</p>
-          <small className="text-gray-500 block">
-            {new Date(inquiry.date).toLocaleString()}
-          </small>
-
+          {/* <small className="text-gray-500 block">{new Date(inquiry.date).toLocaleString()}</small> */}
+          
           {inquiry.reply ? (
             <div className="bg-blue-50 p-4 rounded-md space-y-2">
               <h4 className="font-semibold text-blue-800">답변:</h4>
