@@ -19,7 +19,10 @@ export const getProjects = async () => {
 
 export const getProgress = (project: Project) => {
   const { current_amount, goal_amount } = project;
-  return parseFloat(((Number(current_amount) / Number(goal_amount)) * 100).toFixed(2));
+  if (current_amount === 0 || goal_amount === 0) return 0;
+  return parseFloat(
+    ((Number(current_amount) / Number(goal_amount)) * 100).toFixed(2)
+  );
 };
 
 export const getFundingState = (state: 'ongoing' | 'completed' | 'pending' | 'failed') => {
