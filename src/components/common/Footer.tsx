@@ -14,13 +14,13 @@ const Footer = () => {
   ];
 
   return (
-    <div className="h-[100px] border-t ">
-      <ul className="flex justify-center">
+    <div className='h-[100px] border-t'>
+      <ul className='flex justify-center'>
         {footer &&
           footer.map((item) => {
             return (
               <Link key={item.id} to={item.linkTo}>
-                <li className="mx-3 mt-5 text-h3 hover:text-[#dcdcdc]">
+                <li className='mx-3 mt-5 text-h3 hover:text-[#dcdcdc]'>
                   {item.name}
                 </li>
               </Link>

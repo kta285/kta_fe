@@ -83,17 +83,17 @@ const WriteForm = ({
     const uploadedThumbnailUrl = thumbnail
       ? await uploadThumbnailToFirebase() // 새로운 썸네일이 있으면 Firebase에 업로드
       : detail?.title_img; // 기존 썸네일을 유지
-      const body = {
-        title: title.current?.value || '',
-        amount: targetAmount.current?.value || '',
-        category: category,
-        content: content,
-        startDate: detail?.start_date ? new Date(detail.start_date) : new Date(),
-        endDate: endDate,
-        created_by: detail?.created_by,
-        titleImg: uploadedThumbnailUrl || '', // undefined 대신 빈 문자열 할당
-        id: detail?.project_id,
-      };
+    const body = {
+      title: title.current?.value || '',
+      amount: targetAmount.current?.value || '',
+      category: category,
+      content: content,
+      startDate: detail?.start_date ? new Date(detail.start_date) : new Date(),
+      endDate: endDate,
+      created_by: detail?.created_by,
+      titleImg: uploadedThumbnailUrl || '', // undefined 대신 빈 문자열 할당
+      id: detail?.project_id,
+    };
     try {
       const res = await projectPutApi({ body: body });
       if (Array.isArray(res)) {

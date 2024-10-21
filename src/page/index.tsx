@@ -4,7 +4,7 @@ import MainProject from '../components/main/MainProject';
 
 const Index = () => {
   return (
-    <div className="min-h-[80vh] ">
+    <div className='min-h-[80%] h-auto'>
       <MainSlide />
       <MainProject />
     </div>
