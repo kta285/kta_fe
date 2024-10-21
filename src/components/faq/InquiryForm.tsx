@@ -2,18 +2,20 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-function InquiryForm() {
+function InquiryForm({sessionUser}:{sessionUser:string | null}) {
   const [title, setTitle] = useState<string>("");
   const [content, setContent] = useState<string>("");
   const navigate = useNavigate();
-
+  
+  
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
       await axios.post("http://localhost:3333/inquiries/submit", {
         title,
         content,
-      });
+        user_id : sessionUser,
+        });
       alert("문의가 성공적으로 접수되었습니다.");
       navigate("/inquiries");
     } catch (error) {

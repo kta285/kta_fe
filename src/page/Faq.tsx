@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import FAQ from '../components/faq/FAQ';
 import InquiryForm from '../components/faq/InquiryForm';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 interface FAQItem {
   question: string;
@@ -10,6 +10,8 @@ interface FAQItem {
 
 function Faq() {
   const [isModalOpen, setIsModalOpen] = useState(false);  // 모달 상태 관리
+  const sessionUser = sessionStorage.getItem('user_id') ?? null;
+  const navigate = useNavigate();
 
   const faqData: FAQItem[] = [
     {
@@ -35,7 +37,11 @@ function Faq() {
   ];
 
   // 모달 토글 함수
-  const toggleModal = () => setIsModalOpen(prev => !prev)
+  const toggleModal = () => {
+    if (!sessionUser) {
+      return navigate('/login');
+    }
+    setIsModalOpen(prev => !prev)}
 
   return (
     <div className="max-w-4xl mx-auto p-6 bg-gray-100 min-h-screen">
@@ -68,7 +74,7 @@ function Faq() {
             >
               X
             </button>
-            <InquiryForm /> {/* InquiryForm이 모달 안에 표시됨 */}
+            <InquiryForm  sessionUser={sessionUser}/> {/* InquiryForm이 모달 안에 표시됨 */}
           </div>
         </div>
       )}
