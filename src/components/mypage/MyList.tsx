@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import Project from '../../types/project';
 import MyProjectItem from './MyProjectItem';
-import { myProjectApi } from '../../api/requests/projectApi';
+import { myProjectApi } from '../../api/requests/userApi';
 
 const MyList = () => {
   const [projects, setProjects] = useState([]);
