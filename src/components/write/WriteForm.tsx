@@ -1,10 +1,17 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import CustomEditor from './CustomEditor';
-import { projectWriteApi } from '../../api/requests/projectApi';
+import { projectPutApi, projectWriteApi } from '../../api/requests/projectApi';
 import { useNavigate } from 'react-router-dom';
 import CustomDatePicker from '../common/datePicker';
+import { DetailProps } from '../../types/project';
 
-const WriteForm = () => {
+const WriteForm = ({
+  type,
+  detail,
+}: {
+  type: string;
+  detail?: DetailProps;
+}) => {
   const title = useRef<HTMLInputElement>(null);
   const navigate = useNavigate();
   const targetAmount = useRef<HTMLInputElement>(null);
@@ -14,11 +21,20 @@ const WriteForm = () => {
   const [endDate, setEndDate] = useState(new Date());
   const [thumbnail, setThumbnail] = useState<string>(''); // Base64로 저장
   const [thumbnailPreview, setThumbnailPreview] = useState<string | null>(null);
-  console.log(thumbnail);
+  const user_id = sessionStorage.getItem('user_id');
 
   const handleCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setCategory(e.target.value);
   };
+  // detail 데이터가 있으면 카테고리 초기값 설정
+  useEffect(() => {
+    if (detail && detail.type) {
+      setCategory(detail.type); // 카테고리 초기값 설정
+    }
+    if (detail && detail.title_img) {
+      setThumbnailPreview(detail.title_img);
+    }
+  }, [detail]);
 
   const handleThumbnailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files ? e.target.files[0] : null;
@@ -32,7 +48,7 @@ const WriteForm = () => {
     }
   };
 
-  const submit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const createSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const body = {
       title: title.current?.value || '',
@@ -42,6 +58,7 @@ const WriteForm = () => {
       startDate: new Date(),
       endDate: endDate,
       titleImg: thumbnail, // Base64로 변환된 썸네일 데이터
+      createdId: user_id,
     };
     try {
       const res = await projectWriteApi({ body: body });
@@ -56,11 +73,40 @@ const WriteForm = () => {
     }
   };
 
+  const modifySubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const body = {
+      title: title.current?.value || '',
+      amount: targetAmount.current?.value || '',
+      category: category,
+      content: content,
+      startDate: detail?.start_date ? new Date(detail.start_date) : new Date(),
+      endDate: endDate,
+      created_by: detail?.created_by,
+      titleImg:
+        detail?.title_img && thumbnail === '' ? detail?.title_img : thumbnail,
+      id: detail?.project_id,
+    };
+    try {
+      const res = await projectPutApi({ body: body });
+      if (Array.isArray(res)) {
+        console.error('API 요청 중 에러가 발생했습니다.');
+      } else if (res.status === 200) {
+        console.log(res.data.message);
+        navigate(`/projects/detail/${detail?.project_id}`);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <div className='w-[70%] mx-auto min-h-[650px] p-6'>
       <form
         className='bg-white rounded-lg shadow-md p-8 space-y-6'
-        onSubmit={(e) => submit(e)}
+        onSubmit={(e) =>
+          type === 'modify' ? modifySubmit(e) : createSubmit(e)
+        }
       >
         <h2 className='text-2xl font-bold text-gray-800 text-center mb-4'>
           프로젝트 작성
@@ -78,6 +124,7 @@ const WriteForm = () => {
             ref={title}
             className='border border-gray-300 rounded-md p-3  w-[80%]  focus:outline-none focus:ring-2 focus:ring-blue-400'
             placeholder='제목을 입력하세요'
+            defaultValue={detail && detail.title}
           />
         </div>
 
@@ -118,6 +165,8 @@ const WriteForm = () => {
             ref={targetAmount}
             className='border border-gray-300 rounded-md p-3  w-[80%]  focus:outline-none focus:ring-2 focus:ring-blue-400'
             placeholder='목표금액을 입력하세요'
+            readOnly={type === 'modify' && true}
+            defaultValue={detail && detail.goal_amount}
           />
         </div>
 
@@ -149,10 +198,17 @@ const WriteForm = () => {
           >
             마감일
           </label>
-          <CustomDatePicker startDate={endDate} setStartDate={setEndDate} />
+          <CustomDatePicker
+            defaultValue={detail && detail.end_date}
+            startDate={endDate}
+            setStartDate={setEndDate}
+          />
         </div>
-
-        <CustomEditor content={content} setContent={setContent} />
+        <CustomEditor
+          defaultValue={detail && detail.description}
+          content={content}
+          setContent={setContent}
+        />
         <div className='text-center'>
           <button
             type='submit'

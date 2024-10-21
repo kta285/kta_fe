@@ -41,6 +41,7 @@ function Faq() {
     <div className="max-w-4xl mx-auto p-6 bg-gray-100 min-h-screen">
       <h1 className="text-3xl font-bold text-center text-gray-800 mb-8">FAQ 고객 지원 센터</h1>
       <div className="space-y-4 mb-8">
+        
         {faqData.map((faq, index) => (
           <FAQ key={index} question={faq.question} answer={faq.answer} />
         ))}

@@ -1,19 +1,22 @@
-import Layout from "../components/common/Layout";
-import Index from "../page";
-import Faq from "../page/Faq";
-import MyPage from "../page/MyPage";
-import NotFound from "../page/NotFound";
-import ProjectDetail from "../page/ProjectDetail";
-import Projects from "../page/Projects";
-import Write from "../page/Write";
-import InquiryList from "../components/faq/InquiryList";
-import MyList from "../components/mypage/MyList";
-import Signup from "../page/Signup";
-import Login from "../page/Login";
+import Layout from '../components/common/Layout';
+import Index from '../page';
+import Faq from '../page/Faq';
+import MyPage from '../page/MyPage';
+import NotFound from '../page/NotFound';
+import ProjectDetail from '../page/ProjectDetail';
+import Projects from '../page/Projects';
+import Write from '../page/Write';
+import InquiryList from '../components/faq/InquiryList';
+import MyList from '../components/mypage/MyList';
+import Signup from '../page/Signup';
+import Modify from '../page/Modify';
+import Login from '../page/Login';
+import ProtectedRoute from './ProtectedRoute';
+import FundingList from '../components/mypage/FundingList';
 
 export const routes = [
   {
-    path: "/",
+    path: '/',
     element: <Layout />,
     children: [
       { path: "/", element: <Index />, index: true },
@@ -25,17 +28,21 @@ export const routes = [
       { path: "/write", element: <Write /> },
       { path: "inquiries", element: <InquiryList /> },
       {
-        path: "/mypage",
+        path: '/mypage',
         element: <MyPage />,
         children: [
-          { path: "", element: <MyList />, index: true },
-          { path: "my", element: <MyList /> },
-          { path: "funding", element: <MyList /> },
-          { path: "inquiry", element: <InquiryList /> },
+          { path: '', element: <MyList />, index: true },
+          { path: 'my', element: <MyList /> },
+          { path: 'funding', element: <FundingList /> },
+          { path: 'inquiry', element: <InquiryList /> },
         ],
       },
-      { path: "/faq", element: <Faq /> },
-      { path: "*", element: <NotFound /> },
+      {
+        path: '/write',
+        element: <ProtectedRoute children={<Write />} />,
+      },
+      { path: '/faq', element: <Faq /> },
+      { path: '*', element: <NotFound /> },
     ],
   },
 ];

@@ -1,29 +1,39 @@
-import React, { useState } from 'react';
-import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 function InquiryForm() {
-  const [title, setTitle] = useState<string>('');
-  const [content, setContent] = useState<string>('');
+  const [title, setTitle] = useState<string>("");
+  const [content, setContent] = useState<string>("");
   const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      await axios.post('http://localhost:3333/inquiries/submit', { title, content });
-      alert('문의가 성공적으로 접수되었습니다.');
-      navigate('/inquiries');
+      await axios.post("http://localhost:3333/inquiries/submit", {
+        title,
+        content,
+      });
+      alert("문의가 성공적으로 접수되었습니다.");
+      navigate("/inquiries");
     } catch (error) {
-      console.error('문의 제출 중 오류 발생:', error);
-      alert('문의 제출 중 오류가 발생했습니다. 다시 시도해 주세요.');
+      console.error("문의 제출 중 오류 발생:", error);
+      alert("문의 제출 중 오류가 발생했습니다. 다시 시도해 주세요.");
     }
   };
   return (
     <div className="bg-white rounded-lg shadow-md p-6">
-      <h2 className="text-2xl font-bold mb-6 text-center text-gray-800">1:1 문의 남기기</h2>
+      <h2 className="text-2xl font-bold mb-6 text-center text-gray-800">
+        1:1 문의 남기기
+      </h2>
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
-          <label htmlFor="title" className="block text-sm font-medium text-gray-700 mb-1">제목</label>
+          <label
+            htmlFor="title"
+            className="block text-sm font-medium text-gray-700 mb-1"
+          >
+            제목
+          </label>
           <input
             type="text"
             id="title"
@@ -35,7 +45,12 @@ function InquiryForm() {
           />
         </div>
         <div>
-          <label htmlFor="content" className="block text-sm font-medium text-gray-700 mb-1">내용</label>
+          <label
+            htmlFor="content"
+            className="block text-sm font-medium text-gray-700 mb-1"
+          >
+            내용
+          </label>
           <textarea
             id="content"
             value={content}
@@ -45,7 +60,12 @@ function InquiryForm() {
             className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 h-32"
           ></textarea>
         </div>
-        <button type="submit" className="w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 transition duration-300">접수 하기</button>
+        <button
+          type="submit"
+          className="w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 transition duration-300"
+        >
+          접수 하기
+        </button>
       </form>
     </div>
   );

@@ -27,7 +27,6 @@ const Login = () => {
     try {
       const response = await login({ email, password });
       console.log(response);
-      alert("로그인 성공!");
       navigate("/");
     } catch (error) {
       console.error("로그인 중 오류 발생", error);

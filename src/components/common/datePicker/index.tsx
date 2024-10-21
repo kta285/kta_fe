@@ -9,9 +9,14 @@ import './index.css';
 interface IProps {
   startDate: Date;
   setStartDate: Dispatch<SetStateAction<Date>>;
+  defaultValue?: string;
 }
 
-const CustomDatePicker = ({ startDate, setStartDate }: IProps) => {
+const CustomDatePicker = ({
+  defaultValue,
+  startDate,
+  setStartDate,
+}: IProps) => {
   const years = range(2022, getYear(new Date()) + 5, 1);
   const months = [
     '1월',
@@ -27,6 +32,12 @@ const CustomDatePicker = ({ startDate, setStartDate }: IProps) => {
     '11월',
     '12월',
   ];
+
+  const parsedDefaultDate = defaultValue
+    ? new Date(defaultValue) // ISO 8601 형식이라면 이처럼 Date 객체로 변환 가능
+    : startDate;
+
+  const isValidDate = !isNaN(parsedDefaultDate.getTime());
 
   return (
     <div className='flex justify-between items-center w-[80%] mx-auto'>
@@ -61,10 +72,10 @@ const CustomDatePicker = ({ startDate, setStartDate }: IProps) => {
         )}
         locale={ko}
         dateFormat='yyyy.MM.dd'
-        selected={startDate}
+        selected={isValidDate ? parsedDefaultDate : startDate}
         onChange={(date: any) => setStartDate(date)}
         selectsStart
-        startDate={startDate}
+        startDate={isValidDate ? parsedDefaultDate : startDate}
         className='border border-gray-300 rounded-md w-full p-2' // Ensures full width
       />
     </div>

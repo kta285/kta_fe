@@ -14,8 +14,8 @@ const ProjectList: React.FC<ProjectListProps> = ({ projects }) => {
 
   return (
     <div className='container w-[70%] mx-auto'>
-      {projects.map((project: Project) => {
-        return (<ProjectItem project={project} />);
+      {projects.map((project: Project, i) => {
+        return (<ProjectItem key={i} project={project} />);
       })}
     </div>
   );
