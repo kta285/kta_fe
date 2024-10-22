@@ -108,7 +108,7 @@ const WriteForm = ({
   };
 
   return (
-    <div className='w-[70%] mx-auto min-h-[650px] p-6'>
+    <div className='w-[95%] mx-auto min-h-[650px] p-6 lg:w-[70%]'>
       <form
         className='bg-white rounded-lg shadow-md p-8 space-y-6'
         onSubmit={(e) =>
