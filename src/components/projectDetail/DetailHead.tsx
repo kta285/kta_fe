@@ -77,7 +77,7 @@ const DetailHead = ({ data, percentage, isData }: detailProps) => {
           <div className=' w-full h-[350px] mx-auto rounded-md px-[20px]'>
             <img
               className='w-full h-full object-fill rounded-md '
-              src={data.title_img}
+              src={data.title_img || "https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn4.iconfinder.com%2Fdata%2Ficons%2Fsolid-part-6%2F128%2Fimage_icon-512.png&type=sc960_832"}
               alt='타이틀섬네일'
             />
           </div>
